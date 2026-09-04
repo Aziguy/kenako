@@ -62,21 +62,27 @@ export function restoCard(r, { favorite = false, compact = false } = {}) {
     </article>`;
 }
 
-/** Rangée horizontale (liste desktop de la vue carte, résultats). */
-export function restoRow(r, { hover = false } = {}) {
-  return html`
-    <a class="resto-row ${hover ? 'is-hover' : ''}" href="#/r/${r.id}" data-act="peek" data-id="${r.id}">
-      <span class="thumb resto-row__media" style="--tint:${r.tint}"></span>
-      <span style="display:grid;gap:3px;min-width:0">
-        <span class="strong truncate">${r.name}</span>
-        <span class="tiny dim truncate">${r.cuisine} · ${distance(r.distance)} · ${r.eta} min</span>
-        <span class="row" style="gap:6px">
-          <span class="stars" aria-hidden="true">★</span>
-          <span class="tiny num strong">${rating(r.rating)}</span>
-          <span class="tiny dim">${deliveryFee(r.fee)}</span>
-        </span>
+/**
+ * Rangée horizontale (liste latérale de la vue carte, résultats).
+ * Avec `act`, la rangée devient un bouton qui sélectionne au lieu de naviguer.
+ */
+export function restoRow(r, { active = false, act = null } = {}) {
+  const inner = html`
+    <span class="thumb resto-row__media" style="--tint:${r.tint}"></span>
+    <span style="display:grid;gap:3px;min-width:0">
+      <span class="strong truncate">${r.name}</span>
+      <span class="tiny dim truncate">${r.cuisine} · ${distance(r.distance)} · ${r.eta} min</span>
+      <span class="row" style="gap:6px">
+        <span class="stars" aria-hidden="true">★</span>
+        <span class="tiny num strong">${rating(r.rating)}</span>
+        <span class="tiny dim truncate">${deliveryFee(r.fee)}</span>
       </span>
-    </a>`;
+    </span>`;
+
+  return act
+    ? html`<button type="button" class="resto-row ${active ? 'is-active' : ''}"
+        data-act="${act}" data-id="${r.id}" aria-pressed="${active}">${inner}</button>`
+    : html`<a class="resto-row ${active ? 'is-active' : ''}" href="#/r/${r.id}" data-id="${r.id}">${inner}</a>`;
 }
 
 /** Étiquettes de régime / allergène d'un plat. */
@@ -86,26 +92,36 @@ export function dishTags(tags = []) {
   )}`;
 }
 
-/** Ligne de plat sur la fiche restaurant. */
+/**
+ * Carte de plat sur la fiche restaurant.
+ * Vignette à gauche, nom et prix sur la même ligne : l'œil balaye une colonne
+ * de prix alignés plutôt que de les chercher au milieu du texte.
+ */
 export function dishRow(dish, restaurant) {
   const soldOut = Boolean(dish.soldOut);
   return html`
     <button type="button" class="dish ${soldOut ? 'is-sold-out' : ''}"
       data-act="${soldOut ? 'sold-out' : 'open-dish'}" data-dish="${dish.id}" data-rest="${restaurant.id}"
       ${soldOut ? raw('aria-disabled="true"') : ''}>
+      <span class="thumb dish__media" style="--tint:${restaurant.tint}">
+        ${soldOut
+          ? html`<span class="dish__flag">Épuisé</span>`
+          : html`<span class="dish__add">${raw(icon('plus', { size: 18 }))}</span>`}
+      </span>
       <span class="dish__body">
-        <span class="dish__name">${dish.name}</span>
+        <span class="dish__head">
+          <span class="dish__name">${dish.name}</span>
+          <span class="dish__price">${money(dish.price)}</span>
+        </span>
         <span class="dish__desc clamp-2">${dish.desc}</span>
-        <span class="row-wrap" style="gap:6px">
+        <span class="dish__tags">
           ${dishTags(dish.tags)}
           ${soldOut ? html`<span class="badge badge--danger">✕ En rupture</span>` : ''}
           ${dish.customizable ? html`<span class="badge badge--outline">Personnalisable</span>` : ''}
         </span>
-        <span class="dish__price">${money(dish.price)}</span>
-        ${dish.allergens?.length ? html`<span class="tiny dim">Allergènes : ${dish.allergens.join(', ')}</span>` : ''}
-      </span>
-      <span class="thumb dish__media" style="--tint:${restaurant.tint}">
-        ${soldOut ? '' : html`<span class="dish__add">${raw(icon('plus', { size: 18 }))}</span>`}
+        ${dish.allergens?.length
+          ? html`<span class="dish__allergens">Allergènes : ${dish.allergens.join(', ')}</span>`
+          : ''}
       </span>
     </button>`;
 }

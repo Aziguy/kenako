@@ -16,13 +16,16 @@ export const SPACES = [
   { id: 'ds', label: 'Design System', href: 'design-system.html', icon: 'layout' },
 ];
 
-/** Marque Kenako (monogramme + nom). */
+/**
+ * Marque Kenako : monogramme + nom + ligne secondaire.
+ * Le carré s'aligne sur la hauteur du texte (voir `.brand` dans layout.css).
+ */
 export function brandMark(label = 'Kenako', sub = '') {
   return html`
     <span class="logo-mark" aria-hidden="true">K</span>
-    <span style="display:grid;line-height:1.05">
-      <span>${label}</span>
-      ${sub ? html`<span class="eyebrow" style="font-size:9.5px">${sub}</span>` : ''}
+    <span class="brand__text">
+      <span class="brand__name">${label}</span>
+      ${sub ? html`<span class="brand__sub">${sub}</span>` : ''}
     </span>`;
 }
 
@@ -86,9 +89,9 @@ export function sidebar({ title, role, groups, activeId, foot = '' }) {
   return raw(`<aside class="sidebar" aria-label="Navigation">
     <a class="sidebar__brand" href="index.html">
       <span class="logo-mark" aria-hidden="true">K</span>
-      <span style="min-width:0">
-        <span class="sidebar__name truncate">${esc(title)}</span>
-        <span class="sidebar__role">${esc(role)}</span>
+      <span class="brand__text">
+        <span class="brand__name" style="font-size:17px">${esc(title)}</span>
+        <span class="brand__sub">${esc(role)}</span>
       </span>
     </a>
     ${groups

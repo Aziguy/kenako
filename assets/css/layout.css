@@ -16,7 +16,25 @@
   backdrop-filter: saturate(1.6) blur(12px);
   border-bottom: 1px solid var(--line);
 }
-.topbar__brand { display: flex; align-items: center; gap: var(--sp-2); font-family: var(--font-display); font-size: 21px; font-weight: 600; color: var(--ink); text-decoration: none; letter-spacing: -.02em; }
+/* --------------------------------------------------------- Bloc de marque
+   Le carré du monogramme s'étire sur la hauteur exacte du bloc de texte
+   (`align-self: stretch` + `aspect-ratio`) : le lockup reste aligné quelle
+   que soit la taille du nom ou de la ligne qui le suit. */
+.brand, .topbar__brand {
+  display: flex; align-items: stretch; gap: 10px;
+  color: var(--ink); text-decoration: none; min-width: 0;
+}
+.brand__text { display: grid; align-content: center; gap: 3px; min-width: 0; }
+.brand__name {
+  font-family: var(--font-display); font-size: 20px; font-weight: 600;
+  line-height: 1; letter-spacing: -.022em;
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+.brand__sub {
+  font-size: 10px; line-height: 1.1; font-weight: 700;
+  letter-spacing: .13em; text-transform: uppercase; color: var(--ink-3);
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
 .topbar__nav { display: none; gap: 2px; margin-left: var(--sp-4); }
 .topbar__link {
   display: inline-flex; align-items: center; gap: var(--sp-2); min-height: 40px; padding: 0 var(--sp-3);
@@ -28,14 +46,22 @@
 .topbar__actions { margin-left: auto; display: flex; align-items: center; gap: var(--sp-2); }
 @media (min-width: 900px) { .topbar__nav { display: flex; } }
 
-/* Logo mark */
+/* Monogramme */
 .logo-mark {
-  width: 30px; height: 30px; border-radius: 9px; flex-shrink: 0;
-  display: grid; place-items: center; color: #fff; font-weight: 800; font-size: 15px;
+  width: 32px; height: 32px; border-radius: 10px; flex-shrink: 0;
+  display: grid; place-items: center; color: #fff;
+  font-family: var(--font-display); font-weight: 700; font-size: 17px; line-height: 1;
   background: linear-gradient(140deg, var(--primary), var(--accent));
   box-shadow: var(--shadow-xs);
 }
-.logo-mark--lg { width: 44px; height: 44px; border-radius: 13px; font-size: 21px; }
+.logo-mark--lg { width: 44px; height: 44px; border-radius: 13px; font-size: 22px; }
+
+/* Dans un bloc de marque, le carré prend la hauteur du texte. Les deux
+   minimums garantissent qu'il reste carré même sur une seule ligne. */
+.brand .logo-mark, .topbar__brand .logo-mark, .sidebar__brand .logo-mark {
+  align-self: stretch; height: auto; width: auto; aspect-ratio: 1;
+  min-width: 34px; min-height: 34px; border-radius: 10px;
+}
 
 /* ------------------------------------------------------- Navigation basse */
 .bottomnav {
@@ -119,9 +145,10 @@
   overflow-y: auto;
 }
 @media (min-width: 900px) { .sidebar { display: flex; } }
-.sidebar__brand { display: flex; align-items: center; gap: var(--sp-2); padding: var(--sp-2); margin-bottom: var(--sp-3); text-decoration: none; color: var(--ink); }
-.sidebar__name { font-family: var(--font-display); font-size: 18px; font-weight: 600; line-height: 1.1; }
-.sidebar__role { font-size: var(--fs-xs); color: var(--ink-3); font-weight: 600; text-transform: uppercase; letter-spacing: .1em; }
+.sidebar__brand {
+  display: flex; align-items: stretch; gap: 10px;
+  padding: var(--sp-2); margin-bottom: var(--sp-3); text-decoration: none; color: var(--ink);
+}
 .sidebar__group { font-size: var(--fs-xs); text-transform: uppercase; letter-spacing: .12em; color: var(--ink-3); font-weight: 700; padding: var(--sp-4) var(--sp-2) var(--sp-1); }
 .sidebar__link {
   display: flex; align-items: center; gap: var(--sp-3); min-height: 40px; padding: 0 var(--sp-3);

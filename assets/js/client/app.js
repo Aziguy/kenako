@@ -268,8 +268,11 @@ const ACTIONS = {
     },
   }),
 
-  /* --- carte --- */
-  peek: ({ id }) => store.set({ mapSelected: id }),
+  /* --- carte ---
+     La sélection est gérée par la vue elle-même : passer par le magasin
+     provoquerait un rendu complet, donc la destruction de la carte Leaflet. */
+  peek: ({ id }) => MapView.select(ctx, id, { fly: true }),
+  'close-peek': () => MapView.clearSelection(ctx),
   'search-here': () => { store.set({ loading: false }); toastInfo('Recherche relancée sur la zone affichée.'); },
   recenter: () => { MapView.recenter(); toastInfo('Carte recentrée sur votre adresse.'); },
 

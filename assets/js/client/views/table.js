@@ -67,7 +67,7 @@ export function view(ctx) {
         (c) => html`
         <section class="section" style="padding-bottom:var(--sp-5)">
           <h2 class="section__title">${c.cat}</h2>
-          <div class="divider-list">${c.items.map((d) => dishRow(d, r))}</div>
+          <div class="menu-grid">${c.items.map((d) => dishRow(d, r))}</div>
         </section>`
       )}
     </div>

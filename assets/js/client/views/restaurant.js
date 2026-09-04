@@ -127,7 +127,7 @@ function menuPanel(r, state) {
         (c) => html`
         <section class="section" id="cat-${slug(c.cat)}">
           <h2 class="section__title">${c.cat}</h2>
-          <div class="divider-list">
+          <div class="menu-grid">
             ${c.items.map((d) => dishRow(d, r))}
           </div>
         </section>`
