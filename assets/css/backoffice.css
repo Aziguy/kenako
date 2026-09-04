@@ -1,0 +1,131 @@
+/* ==========================================================================
+   Kenako — Back-office (restaurateur & superadmin)
+   Sobre, dense, rapide. On privilégie la lisibilité des données à la
+   décoration : moins d'air, plus d'information par écran.
+   ========================================================================== */
+
+/* `minmax(0, 1fr)` : sans lui, un enfant large (tableau, Kanban) élargit la
+   colonne implicite et fait déborder toute la page sur mobile. */
+.bo-page { display: grid; grid-template-columns: minmax(0, 1fr); gap: var(--sp-5); padding: var(--sp-5) var(--sp-4) 0; }
+@media (min-width: 900px) { .bo-page { padding: var(--sp-6) var(--sp-6) 0; } }
+
+.bo-head { display: flex; align-items: flex-end; justify-content: space-between; gap: var(--sp-4); flex-wrap: wrap; }
+.bo-title { font-family: var(--font-display); font-size: 26px; font-weight: 500; letter-spacing: -.015em; }
+.bo-sub { color: var(--ink-2); font-size: var(--fs-sm); }
+
+/* --------------------------------------------------- Interrupteur commandes */
+.accept-toggle {
+  display: flex; align-items: center; gap: var(--sp-4); padding: var(--sp-4);
+  border-radius: var(--r-lg); background: var(--surface); box-shadow: var(--shadow-sm);
+  border-left: 4px solid var(--success);
+}
+.accept-toggle.is-off { border-left-color: var(--danger); }
+.accept-toggle.is-rush { border-left-color: var(--warning); }
+
+/* ------------------------------------------------------------- Kanban */
+.kanban { display: grid; grid-auto-flow: column; grid-auto-columns: 84vw; gap: var(--sp-3); overflow-x: auto; padding-bottom: var(--sp-3); scroll-snap-type: x proximity; }
+.kanban::-webkit-scrollbar { height: 8px; }
+.kanban::-webkit-scrollbar-thumb { background: var(--line-strong); border-radius: 4px; }
+@media (min-width: 700px) { .kanban { grid-auto-columns: 320px; } }
+@media (min-width: 1400px) { .kanban { grid-auto-flow: row; grid-template-columns: repeat(6, minmax(0, 1fr)); overflow: visible; } }
+.kanban__col { display: grid; grid-template-rows: auto 1fr; gap: var(--sp-2); scroll-snap-align: start; min-width: 0; }
+.kanban__head { display: flex; align-items: center; gap: var(--sp-2); padding: var(--sp-2) var(--sp-1); position: sticky; top: 0; }
+.kanban__list { display: grid; gap: var(--sp-2); align-content: start; }
+
+.order-card {
+  display: grid; gap: var(--sp-2); padding: var(--sp-3); width: 100%; text-align: left;
+  border: 1px solid var(--line); border-left: 3px solid var(--line-strong); border-radius: var(--r-md);
+  background: var(--surface); color: inherit;
+  transition: box-shadow var(--t-fast), transform var(--t-fast), border-color var(--t-fast);
+}
+.order-card:hover { box-shadow: var(--shadow-sm); transform: translateY(-1px); }
+.order-card.is-new { border-left-color: var(--primary); background: var(--primary-soft); }
+.order-card.is-late { border-left-color: var(--danger); }
+.order-card__id { font-family: var(--font-mono); font-weight: 700; font-size: var(--fs-sm); }
+.order-card__items { font-size: var(--fs-sm); color: var(--ink-2); line-height: 1.4; }
+
+/* ------------------------------------------------------------- Écran cuisine */
+.kds { min-height: 100vh; background: #0E0B09; color: #F7EFE5; padding: var(--sp-4); }
+.kds__grid { display: grid; gap: var(--sp-3); grid-template-columns: repeat(auto-fill, minmax(min(100%, 300px), 1fr)); }
+.kds__card { border-radius: var(--r-lg); padding: var(--sp-4); background: #1A1512; border-top: 5px solid var(--herb); display: grid; gap: var(--sp-3); }
+.kds__card.is-warn { border-top-color: #E0A94A; }
+.kds__card.is-late { border-top-color: #F0776A; animation: ken-pulse 1.6s ease-in-out infinite; }
+.kds__timer { font-family: var(--font-mono); font-size: 30px; font-weight: 700; letter-spacing: -.03em; }
+.kds__id { font-family: var(--font-mono); font-size: 17px; font-weight: 700; opacity: .8; }
+.kds__line { display: flex; gap: var(--sp-3); font-size: 19px; line-height: 1.3; }
+.kds__qty { font-family: var(--font-mono); font-weight: 700; color: #FFC15E; min-width: 28px; }
+.kds__opt { font-size: 14px; color: #C3B1A2; }
+
+/* ------------------------------------------------------------- Menu / carte */
+.menu-cat { display: grid; gap: var(--sp-2); }
+.menu-row {
+  display: grid; grid-template-columns: auto 1fr auto; gap: var(--sp-3); align-items: center;
+  padding: var(--sp-3); border-radius: var(--r-md); background: var(--surface); box-shadow: var(--shadow-xs);
+}
+.menu-row.is-out { opacity: .6; }
+.menu-row__grip { color: var(--ink-3); cursor: grab; display: grid; }
+.menu-row[draggable="true"]:active { cursor: grabbing; }
+.menu-row.is-dragging { opacity: .4; }
+.menu-row.is-over { box-shadow: 0 -2px 0 var(--primary), var(--shadow-xs); }
+
+/* ----------------------------------------------------------------- Zones */
+.zone-legend { display: flex; align-items: center; gap: var(--sp-2); font-size: var(--fs-sm); }
+.zone-swatch { width: 14px; height: 14px; border-radius: 4px; flex-shrink: 0; }
+
+/* ---------------------------------------------------------- Plan de salle */
+.floorplan { display: grid; grid-template-columns: repeat(auto-fill, minmax(84px, 1fr)); gap: var(--sp-3); }
+.floor-table {
+  aspect-ratio: 1; border-radius: var(--r-md); border: 2px solid var(--line-strong);
+  background: var(--surface); display: grid; place-content: center; gap: 2px; text-align: center;
+  font-size: var(--fs-sm); color: var(--ink);
+}
+.floor-table.is-busy { border-color: var(--primary); background: var(--primary-soft); color: var(--primary-strong); }
+.floor-table.is-booked { border-color: var(--warning); background: var(--warning-soft); color: var(--warning); }
+.floor-table__no { font-family: var(--font-mono); font-size: 19px; font-weight: 700; }
+
+/* -------------------------------------------------------------- QR code */
+.qr-tile { display: grid; gap: var(--sp-2); justify-items: center; padding: var(--sp-4); border: 1px solid var(--line); border-radius: var(--r-md); background: var(--surface); }
+.qr-art { width: 96px; height: 96px; border-radius: var(--r-sm); background: var(--ink); color: var(--bg); display: grid; place-items: center; }
+
+/* ------------------------------------------------------- Checklist onboarding */
+.check-item { display: flex; gap: var(--sp-3); align-items: center; padding: var(--sp-3); border-radius: var(--r-md); background: var(--surface); box-shadow: var(--shadow-xs); text-align: left; width: 100%; border: 0; color: inherit; }
+.check-item__box { width: 24px; height: 24px; border-radius: 50%; border: 2px solid var(--line-strong); display: grid; place-items: center; flex-shrink: 0; color: #fff; }
+.check-item.is-done .check-item__box { background: var(--success); border-color: var(--success); }
+.check-item.is-done .check-item__label { text-decoration: line-through; color: var(--ink-3); }
+
+/* ------------------------------------------------------------ Générateur social */
+.social-preview {
+  border-radius: var(--r-lg); overflow: hidden; position: relative; color: #fff;
+  display: grid; align-content: end; gap: 6px; padding: var(--sp-5); box-shadow: var(--shadow-md);
+}
+.social-preview--post { aspect-ratio: 1; }
+.social-preview--story { aspect-ratio: 9 / 16; }
+.social-preview__bg { position: absolute; inset: 0; z-index: 0; }
+.social-preview > *:not(.social-preview__bg) { position: relative; z-index: 1; }
+
+/* -------------------------------------------------------- Documents à valider */
+.doc-viewer {
+  aspect-ratio: 4 / 3; border-radius: var(--r-md); background: var(--surface-2);
+  border: 1px dashed var(--line-strong); display: grid; place-items: center; gap: var(--sp-2);
+  text-align: center; padding: var(--sp-4); color: var(--ink-3);
+}
+
+/* ------------------------------------------------------- Bandeau lecture seule */
+.readonly-banner {
+  display: flex; align-items: center; gap: var(--sp-3);
+  padding: var(--sp-3) var(--sp-4); border-radius: var(--r-md);
+  background: var(--warning-soft); color: var(--ink);
+  border: 1px solid color-mix(in srgb, var(--warning) 40%, transparent);
+  font-size: var(--fs-sm); font-weight: 600;
+}
+
+/* ------------------------------------------------------------------ Divers */
+.dense-list > * { padding: var(--sp-3) 0; }
+.dense-list > * + * { border-top: 1px solid var(--line); }
+
+.filter-bar { display: flex; gap: var(--sp-2); flex-wrap: wrap; align-items: center; }
+.filter-bar .input, .filter-bar .select { width: auto; min-width: 160px; }
+
+.legend { display: flex; gap: var(--sp-4); flex-wrap: wrap; font-size: var(--fs-sm); color: var(--ink-2); }
+.legend__item { display: inline-flex; align-items: center; gap: 6px; }
+.legend__swatch { width: 10px; height: 10px; border-radius: 3px; }

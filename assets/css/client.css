@@ -1,0 +1,222 @@
+/* ==========================================================================
+   Kenako — Espace client
+   Ton chaleureux, la nourriture en héros, tout atteignable au pouce.
+   ========================================================================== */
+
+/* ------------------------------------------------------- Barre de recherche */
+.searchbar { display: grid; gap: var(--sp-3); padding: var(--sp-4) 0 var(--sp-3); }
+.searchbar__row { display: flex; gap: var(--sp-2); }
+.searchbar__row .input-group { flex: 1; }
+
+.address-pill {
+  display: flex; align-items: center; gap: var(--sp-2); min-height: 40px; padding: 0 var(--sp-3);
+  border: 0; border-radius: var(--r-full); background: var(--surface-2);
+  font-size: var(--fs-sm); font-weight: 600; color: var(--ink); max-width: 100%;
+}
+.address-pill svg { color: var(--primary); flex-shrink: 0; }
+
+/* ------------------------------------------------------ Carte restaurant */
+.resto-card { position: relative; display: grid; grid-template-rows: auto 1fr; }
+.resto-card__media { position: relative; aspect-ratio: 16 / 10; border-radius: 0; }
+/* La droite est réservée au bouton favori : les badges ne passent pas dessous. */
+.resto-card__flags { position: absolute; top: var(--sp-3); left: var(--sp-3); right: 56px; display: flex; gap: 6px; z-index: 3; flex-wrap: wrap; }
+.resto-card__fav {
+  position: absolute; top: var(--sp-3); right: var(--sp-3); z-index: 4;
+  width: 36px; height: 36px; border-radius: 50%; border: 0; display: grid; place-items: center;
+  background: color-mix(in srgb, var(--surface) 90%, transparent); color: var(--ink-2); backdrop-filter: blur(6px);
+  transition: transform var(--t-fast), color var(--t-fast);
+}
+.resto-card__fav:hover { transform: scale(1.08); }
+.resto-card__fav.is-on { color: var(--primary); }
+.resto-card__fav.is-on svg { fill: currentColor; }
+.resto-card__body { display: grid; gap: 6px; padding: var(--sp-4); }
+.resto-card__name { font-family: var(--font-display); font-size: 19px; font-weight: 500; line-height: 1.2; }
+.resto-card__meta { display: flex; align-items: center; gap: var(--sp-2); font-size: var(--fs-sm); color: var(--ink-2); flex-wrap: wrap; }
+.resto-card__meta .num { color: var(--ink); font-weight: 600; }
+.resto-card__body > .between > .row { flex-shrink: 0; white-space: nowrap; }
+.resto-card.is-closed .resto-card__media::before { filter: grayscale(.65) brightness(.8); }
+
+/* Rangée horizontale (liste desktop, résultats de carte) */
+.resto-row { display: grid; grid-template-columns: 92px 1fr; gap: var(--sp-3); padding: var(--sp-3); align-items: center; width: 100%; text-align: left; border: 0; background: transparent; color: inherit; border-radius: var(--r-md); }
+.resto-row:hover, .resto-row.is-hover { background: var(--surface-2); }
+.resto-row__media { aspect-ratio: 1; border-radius: var(--r-sm); }
+
+/* --------------------------------------------------------------- Bandeau */
+.hero-resto { position: relative; }
+.hero-resto__cover { height: 190px; }
+@media (min-width: 768px) { .hero-resto__cover { height: 280px; } }
+.hero-resto__back {
+  position: absolute; top: var(--sp-3); left: var(--sp-3); z-index: 5;
+  width: 40px; height: 40px; border-radius: 50%; border: 0; display: grid; place-items: center;
+  background: color-mix(in srgb, var(--surface) 92%, transparent); color: var(--ink); backdrop-filter: blur(6px); box-shadow: var(--shadow-sm);
+}
+.hero-resto__tools { position: absolute; top: var(--sp-3); right: var(--sp-3); z-index: 5; display: flex; gap: var(--sp-2); }
+.hero-resto__card {
+  position: relative; margin: -46px var(--sp-4) 0; padding: var(--sp-5);
+  background: var(--surface); border-radius: var(--r-lg); box-shadow: var(--shadow-md); z-index: 4;
+  display: grid; gap: var(--sp-3);
+}
+@media (min-width: 768px) { .hero-resto__card { margin-inline: auto; max-width: var(--content-max); } }
+.hero-resto__title { font-family: var(--font-display); font-size: clamp(24px, 4vw, 34px); font-weight: 500; line-height: 1.1; }
+
+/* --------------------------------------------------------- Carte de plat */
+.dish {
+  display: grid; grid-template-columns: 1fr 96px; gap: var(--sp-3);
+  width: 100%; padding: var(--sp-4) 0; text-align: left; border: 0; background: transparent; color: inherit;
+  transition: opacity var(--t-fast);
+}
+.dish:hover .dish__name { color: var(--primary-strong); }
+.dish__media { aspect-ratio: 1; border-radius: var(--r-md); position: relative; }
+.dish__body { display: grid; gap: 6px; align-content: start; min-width: 0; }
+.dish__name { font-family: var(--font-display); font-size: 17px; font-weight: 500; line-height: 1.25; transition: color var(--t-fast); }
+.dish__desc { font-size: var(--fs-sm); color: var(--ink-2); line-height: 1.45; }
+.dish__price { font-family: var(--font-mono); font-weight: 600; font-size: var(--fs-md); }
+.dish__add {
+  position: absolute; right: -6px; bottom: -6px; z-index: 3;
+  width: 34px; height: 34px; border-radius: 50%; border: 2px solid var(--surface);
+  background: var(--surface); color: var(--primary); display: grid; place-items: center;
+  box-shadow: var(--shadow-sm); transition: transform var(--t-fast), background var(--t-fast), color var(--t-fast);
+}
+.dish:hover .dish__add { background: var(--primary); color: #fff; transform: scale(1.06); }
+.dish.is-sold-out { opacity: .55; }
+.dish.is-sold-out .dish__add { display: none; }
+
+.cat-nav {
+  position: sticky; top: var(--topbar-h); z-index: 40;
+  padding: var(--sp-3) 0; margin-bottom: calc(var(--sp-3) * -1);
+  background: color-mix(in srgb, var(--bg) 92%, transparent); backdrop-filter: blur(10px);
+}
+
+/* ---------------------------------------------------------- Barre panier */
+.cartbar {
+  position: fixed; left: 0; right: 0; z-index: 68;
+  bottom: calc(var(--bottomnav-h) + var(--safe-b));
+  padding: var(--sp-3) var(--sp-4);
+  animation: ken-rise var(--t-base) both;
+}
+@media (min-width: 900px) { .cartbar { bottom: var(--sp-5); left: auto; right: var(--sp-6); width: 360px; padding: 0; } }
+.cartbar__inner {
+  max-width: 640px; margin: 0 auto;
+  display: flex; align-items: center; gap: var(--sp-3);
+  min-height: 56px; padding: 0 var(--sp-3) 0 var(--sp-4);
+  border-radius: var(--r-lg); background: var(--primary); color: #fff;
+  box-shadow: var(--shadow-lg); border: 0; width: 100%; text-align: left;
+  transition: transform var(--t-fast), background var(--t-fast);
+}
+.cartbar__inner:hover { background: var(--primary-strong); transform: translateY(-2px); }
+.cartbar__count {
+  width: 26px; height: 26px; border-radius: 50%; background: rgba(255, 255, 255, .22);
+  display: grid; place-items: center; font-weight: 700; font-size: var(--fs-sm); flex-shrink: 0;
+}
+
+/* --------------------------------------------------------------- Panier */
+.cart-line { display: grid; grid-template-columns: 1fr auto; gap: var(--sp-3); padding: var(--sp-4) 0; align-items: start; }
+.qty { display: inline-flex; align-items: center; gap: 2px; border: 1px solid var(--line); border-radius: var(--r-full); padding: 2px; }
+.qty__btn { width: 32px; height: 32px; border: 0; border-radius: 50%; background: transparent; color: var(--ink); display: grid; place-items: center; }
+.qty__btn:hover { background: var(--surface-2); }
+.qty__value { min-width: 26px; text-align: center; font-weight: 700; font-family: var(--font-mono); font-size: var(--fs-sm); }
+
+.summary { display: grid; gap: var(--sp-2); font-size: var(--fs-sm); }
+.summary__row { display: flex; justify-content: space-between; gap: var(--sp-3); }
+.summary__row--total { font-size: var(--fs-lg); font-weight: 700; padding-top: var(--sp-3); border-top: 1px solid var(--line); }
+.summary__row--discount { color: var(--success); font-weight: 600; }
+
+/* ------------------------------------------------------------ Suivi commande */
+.timeline { display: grid; gap: 0; }
+.timeline__item { display: grid; grid-template-columns: 34px 1fr; gap: var(--sp-3); }
+.timeline__rail { display: grid; justify-items: center; grid-template-rows: auto 1fr; }
+.timeline__dot {
+  width: 30px; height: 30px; border-radius: 50%; display: grid; place-items: center;
+  background: var(--surface-2); color: var(--ink-3); font-size: 14px;
+  border: 2px solid var(--surface-2); transition: all var(--t-base);
+}
+.timeline__line { width: 2px; background: var(--surface-3); min-height: 26px; }
+.timeline__body { padding-bottom: var(--sp-5); }
+.timeline__item.is-done .timeline__dot { background: var(--success); border-color: var(--success); color: #fff; }
+.timeline__item.is-done .timeline__line { background: var(--success); }
+.timeline__item.is-current .timeline__dot { background: var(--primary); border-color: var(--primary); color: #fff; animation: ken-pulse 2s ease-in-out infinite; }
+.timeline__label { font-weight: 700; font-size: var(--fs-md); }
+.timeline__hint { font-size: var(--fs-sm); color: var(--ink-2); }
+
+/* ----------------------------------------------------------- Fidélité */
+.loyalty-card {
+  border-radius: var(--r-lg); padding: var(--sp-5); color: #fff; position: relative; overflow: hidden;
+  background: var(--tint, var(--primary)); box-shadow: var(--shadow-md); display: grid; gap: var(--sp-3);
+}
+.loyalty-card::after {
+  content: ""; position: absolute; inset: 0;
+  background: radial-gradient(90% 70% at 90% 10%, rgba(255,255,255,.22), transparent 60%);
+  pointer-events: none;
+}
+.stamps { display: flex; gap: 6px; flex-wrap: wrap; position: relative; z-index: 1; }
+.stamp { width: 28px; height: 28px; border-radius: 50%; border: 2px dashed rgba(255,255,255,.55); display: grid; place-items: center; font-size: 13px; }
+.stamp.is-on { border-style: solid; background: rgba(255,255,255,.94); color: var(--ink); }
+
+/* --------------------------------------------------------------- Carte */
+.map-canvas { width: 100%; background: var(--surface-2); border-radius: var(--r-lg); overflow: hidden; }
+.map-canvas--full { height: calc(100vh - var(--topbar-h) - var(--bottomnav-h) - var(--safe-b)); border-radius: 0; }
+@media (min-width: 900px) { .map-canvas--full { height: calc(100vh - var(--topbar-h)); } }
+
+.map-split { display: grid; grid-template-columns: 1fr; }
+@media (min-width: 900px) { .map-split { grid-template-columns: 380px 1fr; height: calc(100vh - var(--topbar-h)); } }
+.map-split__list { overflow-y: auto; padding: var(--sp-3); border-right: 1px solid var(--line); background: var(--surface); }
+
+.map-tools { position: absolute; z-index: 20; display: grid; gap: var(--sp-2); }
+.map-tools--top { top: var(--sp-3); left: var(--sp-3); right: var(--sp-3); grid-auto-flow: column; justify-content: space-between; }
+.map-tools .btn { background: var(--surface); box-shadow: var(--shadow-md); }
+
+.map-peek {
+  position: absolute; left: var(--sp-3); right: var(--sp-3); bottom: var(--sp-3); z-index: 25;
+  border-radius: var(--r-lg); background: var(--surface); box-shadow: var(--shadow-lg);
+  animation: ken-rise var(--t-base) both;
+}
+
+/* Marqueur personnalisé Leaflet */
+.ken-pin-wrap { background: none !important; border: 0 !important; }
+.ken-pin {
+  display: inline-flex; align-items: center; justify-content: center;
+  min-width: 44px; height: 28px; padding: 0 9px;
+  border-radius: var(--r-full); background: var(--primary); color: #fff;
+  font: 700 12px/1 var(--font-ui); white-space: nowrap;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, .35); border: 2px solid #fff;
+  position: relative; transform: translateY(-4px);
+}
+.ken-pin::after {
+  content: ""; position: absolute; top: 100%; left: 50%; transform: translateX(-50%);
+  border: 5px solid transparent; border-top-color: #fff;
+}
+.ken-pin.is-active { background: var(--accent); color: var(--accent-ink); transform: translateY(-4px) scale(1.12); z-index: 10; }
+.ken-pin.is-closed { background: var(--ink-3); }
+
+.leaflet-container { font: inherit; background: var(--surface-2); }
+.leaflet-control-attribution { font-size: 9px !important; background: rgba(255, 255, 255, .7) !important; }
+[data-theme="dark"] .leaflet-control-attribution { background: rgba(0, 0, 0, .5) !important; color: #bbb !important; }
+/* Le fond OpenStreetMap n'a pas de déclinaison sombre : on l'inverse. */
+[data-theme="dark"] .leaflet-tile-pane { filter: invert(1) hue-rotate(180deg) brightness(.92) contrast(.92) saturate(.8); }
+
+/* --------------------------------------------------------- Confirmation */
+.success-art {
+  width: 96px; height: 96px; border-radius: 50%; display: grid; place-items: center;
+  background: var(--success-soft); color: var(--success); font-size: 44px;
+  animation: ken-pop 420ms cubic-bezier(.2, 1.2, .3, 1) both;
+}
+
+/* ------------------------------------------------------------ QR à table */
+.table-badge {
+  display: inline-flex; align-items: center; gap: var(--sp-2);
+  padding: var(--sp-2) var(--sp-4); border-radius: var(--r-full);
+  background: var(--accent); color: var(--accent-ink); font-weight: 700; font-size: var(--fs-sm);
+}
+
+/* --------------------------------------------------------------- Divers */
+.proto-note {
+  display: inline-flex; align-items: center; gap: 6px;
+  font-size: var(--fs-xs); color: var(--ink-3); font-weight: 600;
+}
+[data-theme="light"] .theme-icon-dark, [data-theme="dark"] .theme-icon-light { display: none; }
+
+.snap-list { display: flex; gap: var(--sp-4); overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none; padding-bottom: 4px; }
+.snap-list::-webkit-scrollbar { display: none; }
+.snap-list > * { flex: 0 0 74%; scroll-snap-align: start; }
+@media (min-width: 640px) { .snap-list > * { flex: 0 0 46%; } }
+@media (min-width: 1024px) { .snap-list { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); overflow: visible; } .snap-list > * { flex: none; } }

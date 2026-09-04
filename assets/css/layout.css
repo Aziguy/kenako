@@ -1,0 +1,180 @@
+/* ==========================================================================
+   Kenako — Coques applicatives
+   Mobile d'abord : barre haute compacte + navigation basse au pouce.
+   Desktop : barre haute large (client) ou colonne latérale (back-office).
+   ========================================================================== */
+
+.app { min-height: 100vh; display: flex; flex-direction: column; }
+
+/* ------------------------------------------------------------- Barre haute */
+.topbar {
+  position: sticky; top: 0; z-index: 60;
+  min-height: var(--topbar-h);
+  display: flex; align-items: center; gap: var(--sp-3);
+  padding: var(--sp-2) var(--sp-4);
+  background: color-mix(in srgb, var(--surface) 88%, transparent);
+  backdrop-filter: saturate(1.6) blur(12px);
+  border-bottom: 1px solid var(--line);
+}
+.topbar__brand { display: flex; align-items: center; gap: var(--sp-2); font-family: var(--font-display); font-size: 21px; font-weight: 600; color: var(--ink); text-decoration: none; letter-spacing: -.02em; }
+.topbar__nav { display: none; gap: 2px; margin-left: var(--sp-4); }
+.topbar__link {
+  display: inline-flex; align-items: center; gap: var(--sp-2); min-height: 40px; padding: 0 var(--sp-3);
+  border-radius: var(--r-sm); color: var(--ink-2); font-weight: 600; font-size: var(--fs-md); text-decoration: none;
+  transition: background var(--t-fast), color var(--t-fast);
+}
+.topbar__link:hover { background: var(--surface-2); color: var(--ink); }
+.topbar__link.is-active { background: var(--primary-soft); color: var(--primary-strong); }
+.topbar__actions { margin-left: auto; display: flex; align-items: center; gap: var(--sp-2); }
+@media (min-width: 900px) { .topbar__nav { display: flex; } }
+
+/* Logo mark */
+.logo-mark {
+  width: 30px; height: 30px; border-radius: 9px; flex-shrink: 0;
+  display: grid; place-items: center; color: #fff; font-weight: 800; font-size: 15px;
+  background: linear-gradient(140deg, var(--primary), var(--accent));
+  box-shadow: var(--shadow-xs);
+}
+.logo-mark--lg { width: 44px; height: 44px; border-radius: 13px; font-size: 21px; }
+
+/* ------------------------------------------------------- Navigation basse */
+.bottomnav {
+  position: fixed; left: 0; right: 0; bottom: 0; z-index: 70;
+  display: grid; grid-auto-flow: column; grid-auto-columns: 1fr;
+  background: color-mix(in srgb, var(--surface) 94%, transparent);
+  backdrop-filter: saturate(1.6) blur(14px);
+  border-top: 1px solid var(--line);
+  padding-bottom: var(--safe-b);
+  box-shadow: 0 -6px 24px -18px rgba(80, 45, 20, .5);
+}
+.bottomnav__item {
+  position: relative;
+  display: grid; justify-items: center; align-content: center; gap: 3px;
+  min-height: var(--bottomnav-h); padding: 6px 2px;
+  border: 0; background: transparent; color: var(--ink-3);
+  font-size: 10.5px; font-weight: 600; text-decoration: none; letter-spacing: .01em;
+  transition: color var(--t-fast);
+}
+.bottomnav__item svg { width: 22px; height: 22px; }
+.bottomnav__item:hover { color: var(--ink-2); }
+.bottomnav__item.is-active { color: var(--primary); }
+.bottomnav__item.is-active::before {
+  content: ""; position: absolute; top: 0; left: 50%; transform: translateX(-50%);
+  width: 26px; height: 3px; border-radius: 0 0 3px 3px; background: var(--primary);
+}
+.bottomnav__dot {
+  position: absolute; top: 6px; left: calc(50% + 8px);
+  min-width: 17px; height: 17px; padding: 0 4px; border-radius: var(--r-full);
+  background: var(--primary); color: #fff; font-size: 10px; font-weight: 700;
+  display: grid; place-items: center; box-shadow: 0 0 0 2px var(--surface);
+}
+.bottomnav__dot--accent { background: var(--accent); color: var(--accent-ink); }
+
+@media (min-width: 900px) { .bottomnav { display: none; } }
+
+/* ---------------------------------------------------------------- Contenu */
+.main {
+  flex: 1; width: 100%;
+  padding-bottom: calc(var(--bottomnav-h) + var(--safe-b) + var(--sp-6));
+}
+@media (min-width: 900px) { .main { padding-bottom: var(--sp-12); } }
+
+.wrap { width: 100%; max-width: var(--content-max); margin: 0 auto; padding: 0 var(--sp-4); }
+@media (min-width: 768px) { .wrap { padding: 0 var(--sp-6); } }
+.wrap--narrow { max-width: 720px; }
+.wrap--wide   { max-width: 1480px; }
+.wrap--flush  { padding: 0; }
+
+.page { display: grid; grid-template-columns: minmax(0, 1fr); gap: var(--sp-6); padding-top: var(--sp-5); }
+.page__head { display: flex; align-items: flex-end; justify-content: space-between; gap: var(--sp-4); flex-wrap: wrap; }
+.page__title { font-family: var(--font-display); font-size: var(--fs-h2); font-weight: 500; }
+.page__sub { color: var(--ink-2); font-size: var(--fs-md); margin-top: 2px; }
+
+.section { display: grid; grid-template-columns: minmax(0, 1fr); gap: var(--sp-4); }
+.section__head { display: flex; align-items: baseline; justify-content: space-between; gap: var(--sp-3); }
+.section__title { font-family: var(--font-display); font-size: 23px; font-weight: 500; }
+.section__link { font-size: var(--fs-sm); font-weight: 600; text-decoration: none; white-space: nowrap; }
+
+/* Grilles réutilisables */
+.grid { display: grid; gap: var(--sp-4); }
+.grid--cards  { grid-template-columns: repeat(auto-fill, minmax(min(100%, 280px), 1fr)); }
+.grid--tiles  { grid-template-columns: repeat(auto-fill, minmax(min(100%, 220px), 1fr)); }
+.grid--stats  { grid-template-columns: repeat(auto-fit, minmax(min(100%, 168px), 1fr)); }
+.grid--2      { grid-template-columns: 1fr; }
+.grid--3      { grid-template-columns: 1fr; }
+@media (min-width: 768px) { .grid--2 { grid-template-columns: 1fr 1fr; } .grid--3 { grid-template-columns: repeat(3, 1fr); } }
+@media (min-width: 1100px) { .grid--sidebar { grid-template-columns: minmax(0, 1fr) 340px; align-items: start; } }
+
+/* ==========================================================================
+   Coque back-office (restaurateur & superadmin)
+   ========================================================================== */
+.shell { display: grid; grid-template-columns: 1fr; min-height: 100vh; }
+@media (min-width: 900px) { .shell { grid-template-columns: var(--sidebar-w) minmax(0, 1fr); } }
+
+.sidebar {
+  display: none; position: sticky; top: 0; height: 100vh;
+  flex-direction: column; gap: var(--sp-1);
+  padding: var(--sp-4) var(--sp-3);
+  background: var(--surface); border-right: 1px solid var(--line);
+  overflow-y: auto;
+}
+@media (min-width: 900px) { .sidebar { display: flex; } }
+.sidebar__brand { display: flex; align-items: center; gap: var(--sp-2); padding: var(--sp-2); margin-bottom: var(--sp-3); text-decoration: none; color: var(--ink); }
+.sidebar__name { font-family: var(--font-display); font-size: 18px; font-weight: 600; line-height: 1.1; }
+.sidebar__role { font-size: var(--fs-xs); color: var(--ink-3); font-weight: 600; text-transform: uppercase; letter-spacing: .1em; }
+.sidebar__group { font-size: var(--fs-xs); text-transform: uppercase; letter-spacing: .12em; color: var(--ink-3); font-weight: 700; padding: var(--sp-4) var(--sp-2) var(--sp-1); }
+.sidebar__link {
+  display: flex; align-items: center; gap: var(--sp-3); min-height: 40px; padding: 0 var(--sp-3);
+  border: 0; border-radius: var(--r-sm); background: transparent; width: 100%;
+  color: var(--ink-2); font-weight: 600; font-size: var(--fs-md); text-decoration: none;
+  transition: background var(--t-fast), color var(--t-fast);
+}
+.sidebar__link svg { width: 18px; height: 18px; flex-shrink: 0; opacity: .85; }
+.sidebar__link:hover { background: var(--surface-2); color: var(--ink); }
+.sidebar__link.is-active { background: var(--primary-soft); color: var(--primary-strong); }
+.sidebar__link.is-active svg { opacity: 1; }
+.sidebar__badge { margin-left: auto; }
+.sidebar__foot { margin-top: auto; padding-top: var(--sp-4); display: grid; gap: var(--sp-2); }
+
+.shell__main { display: flex; flex-direction: column; min-width: 0; background: var(--bg); }
+
+/* Barre d'outils dense du back-office */
+.toolbar {
+  position: sticky; top: 0; z-index: 50;
+  display: flex; align-items: center; gap: var(--sp-3);
+  min-height: var(--topbar-h); padding: var(--sp-2) var(--sp-4);
+  background: color-mix(in srgb, var(--surface) 90%, transparent);
+  backdrop-filter: saturate(1.6) blur(12px);
+  border-bottom: 1px solid var(--line);
+}
+.toolbar__title { font-family: var(--font-display); font-size: 19px; font-weight: 600; letter-spacing: -.01em; }
+.toolbar__actions { margin-left: auto; display: flex; align-items: center; gap: var(--sp-2); }
+
+/* Feuille « Plus » de navigation mobile du back-office */
+.navsheet { display: grid; grid-template-columns: repeat(auto-fill, minmax(104px, 1fr)); gap: var(--sp-2); }
+.navsheet__item {
+  display: grid; justify-items: center; gap: 6px; padding: var(--sp-4) var(--sp-2);
+  border: 1px solid var(--line); border-radius: var(--r-md); background: var(--surface);
+  color: var(--ink); font-size: var(--fs-sm); font-weight: 600; text-align: center; text-decoration: none;
+}
+.navsheet__item svg { width: 22px; height: 22px; color: var(--primary); }
+.navsheet__item.is-active { border-color: var(--primary); background: var(--primary-soft); }
+
+/* ------------------------------------------------ Barre d'action flottante */
+.actionbar {
+  position: fixed; left: 0; right: 0; z-index: 65;
+  bottom: calc(var(--bottomnav-h) + var(--safe-b));
+  padding: var(--sp-3) var(--sp-4) calc(var(--sp-3));
+  background: color-mix(in srgb, var(--surface) 94%, transparent);
+  backdrop-filter: blur(14px); border-top: 1px solid var(--line);
+  animation: ken-rise var(--t-base) both;
+}
+.actionbar__inner { max-width: var(--content-max); margin: 0 auto; display: flex; align-items: center; gap: var(--sp-3); }
+@media (min-width: 900px) { .actionbar { bottom: 0; padding-bottom: var(--sp-4); } }
+
+/* Impression : ticket de cuisine */
+@media print {
+  .topbar, .bottomnav, .sidebar, .toolbar, .actionbar, .toaster, .no-print { display: none !important; }
+  body { background: #fff; }
+  .main { padding: 0; }
+}

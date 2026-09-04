@@ -1,0 +1,158 @@
+/* ==========================================================================
+   Kenako — Design tokens
+   Palette « Paprika & Basilic » : une chaleur d'épice pour l'appétit,
+   un vert d'herbes fraîches pour la confiance. Aucun brun, aucun dégradé SaaS.
+   ========================================================================== */
+
+:root {
+  color-scheme: light;
+
+  /* --- Fonds & surfaces (neutres chauds, jamais de blanc pur) ------------ */
+  --bg:            #FBF6EF;
+  --bg-sunk:       #F3EADD;
+  --surface:       #FFFDFA;
+  --surface-2:     #F6EEE2;
+  --surface-3:     #EDE2D2;
+  --overlay:       rgba(34, 24, 18, .48);
+
+  /* --- Encres ------------------------------------------------------------ */
+  --ink:           #221913;
+  --ink-2:         #67564A;
+  --ink-3:         #968577;
+  --ink-on-dark:   #FBF6EF;
+  --line:          #E7DAC7;
+  --line-strong:   #D5C4AC;
+
+  /* --- Marque ------------------------------------------------------------ */
+  --primary:       #C9451A;   /* Paprika — action principale */
+  --primary-strong:#A2360F;   /* Paprika grillé — survol / texte */
+  --primary-soft:  #FBE3D7;
+  --primary-ring:  rgba(201, 69, 26, .28);
+
+  --accent:        #F5A524;   /* Safran — CTA de conversion */
+  --accent-strong: #DE8F0D;
+  --accent-ink:    #402700;
+  --accent-soft:   #FDEFD3;
+
+  --herb:          #157A5B;   /* Basilic — donnée, pro, second niveau */
+  --herb-soft:     #DCEFE6;
+
+  /* --- Statuts (toujours couleur + icône + texte) ------------------------ */
+  --success:       #157A5B;
+  --success-soft:  #DCEFE6;
+  --warning:       #A96A00;
+  --warning-soft:  #FBEBCD;
+  --danger:        #B3261E;
+  --danger-soft:   #F9DEDA;
+  --info:          #2C5F86;
+  --info-soft:     #DDE9F2;
+
+  /* --- Élévation (ombres chaudes, jamais de bordure dure) ---------------- */
+  --shadow-xs: 0 1px 2px rgba(80, 45, 20, .06);
+  --shadow-sm: 0 1px 2px rgba(80, 45, 20, .06), 0 4px 12px -6px rgba(80, 45, 20, .20);
+  --shadow-md: 0 1px 2px rgba(80, 45, 20, .06), 0 12px 28px -14px rgba(80, 45, 20, .30);
+  --shadow-lg: 0 2px 4px rgba(80, 45, 20, .07), 0 28px 56px -20px rgba(80, 45, 20, .38);
+  --ring: 0 0 0 3px var(--primary-ring);
+
+  /* --- Typographie ------------------------------------------------------- */
+  --font-display: 'Newsreader', 'Iowan Old Style', Georgia, serif;
+  --font-ui: 'Instrument Sans', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  --font-mono: ui-monospace, 'SF Mono', 'Cascadia Mono', Menlo, monospace;
+
+  --fs-display: clamp(38px, 6vw, 64px);
+  --fs-h1: clamp(28px, 4.2vw, 40px);
+  --fs-h2: clamp(22px, 3vw, 30px);
+  --fs-h3: 20px;
+  --fs-lg: 17px;
+  --fs-md: 15px;
+  --fs-sm: 13px;
+  --fs-xs: 11px;
+
+  /* --- Espacement (échelle 4) -------------------------------------------- */
+  --sp-1: 4px;  --sp-2: 8px;  --sp-3: 12px; --sp-4: 16px;
+  --sp-5: 20px; --sp-6: 24px; --sp-8: 32px; --sp-10: 40px;
+  --sp-12: 48px; --sp-16: 64px;
+
+  /* --- Rayons ------------------------------------------------------------ */
+  --r-xs: 6px; --r-sm: 8px; --r-md: 12px; --r-lg: 16px; --r-xl: 24px; --r-full: 999px;
+
+  /* --- Mouvement --------------------------------------------------------- */
+  --t-fast: 120ms cubic-bezier(.2, 0, 0, 1);
+  --t-base: 180ms cubic-bezier(.2, 0, 0, 1);
+  --t-slow: 260ms cubic-bezier(.2, 0, 0, 1);
+
+  /* --- Gabarits ---------------------------------------------------------- */
+  --tap: 44px;                 /* cible tactile minimale */
+  --topbar-h: 60px;
+  --bottomnav-h: 62px;
+  --sidebar-w: 244px;
+  --content-max: 1240px;
+  --safe-b: env(safe-area-inset-bottom, 0px);
+}
+
+/* ==========================================================================
+   Mode sombre — le même produit, de nuit en cuisine
+   ========================================================================== */
+[data-theme='dark'] {
+  color-scheme: dark;
+
+  --bg:            #16110E;
+  --bg-sunk:       #100C0A;
+  --surface:       #201914;
+  --surface-2:     #2A211B;
+  --surface-3:     #362A22;
+  --overlay:       rgba(0, 0, 0, .62);
+
+  --ink:           #F7EFE5;
+  --ink-2:         #C3B1A2;
+  --ink-3:         #8E7E70;
+  --ink-on-dark:   #F7EFE5;
+  --line:          #3A2D25;
+  --line-strong:   #4E3D32;
+
+  --primary:       #FF7A45;
+  --primary-strong:#FFA47D;
+  --primary-soft:  #3E2015;
+  --primary-ring:  rgba(255, 122, 69, .32);
+
+  --accent:        #FFC15E;
+  --accent-strong: #FFD489;
+  --accent-ink:    #2A1A00;
+  --accent-soft:   #3A2A0E;
+
+  --herb:          #4FBC93;
+  --herb-soft:     #16332A;
+
+  --success:       #4FBC93;
+  --success-soft:  #16332A;
+  --warning:       #E0A94A;
+  --warning-soft:  #38290F;
+  --danger:        #F0776A;
+  --danger-soft:   #3D1F1C;
+  --info:          #85B3DC;
+  --info-soft:     #1A2A38;
+
+  --shadow-xs: 0 1px 2px rgba(0, 0, 0, .40);
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, .40), 0 4px 12px -6px rgba(0, 0, 0, .60);
+  --shadow-md: 0 1px 2px rgba(0, 0, 0, .40), 0 12px 28px -14px rgba(0, 0, 0, .70);
+  --shadow-lg: 0 2px 4px rgba(0, 0, 0, .45), 0 28px 56px -20px rgba(0, 0, 0, .80);
+}
+
+/* La console superadmin assume une densité plus forte et un gris plus neutre. */
+[data-surface='admin'] {
+  --bg:        #F4F2EE;
+  --bg-sunk:   #EAE7E1;
+  --surface:   #FFFDFB;
+  --surface-2: #F1EEE9;
+  --surface-3: #E5E1DA;
+  --line:      #DFDAD2;
+  --fs-md: 14px;
+}
+[data-theme='dark'][data-surface='admin'] {
+  --bg:        #131211;
+  --bg-sunk:   #0D0C0B;
+  --surface:   #1C1B1A;
+  --surface-2: #252321;
+  --surface-3: #302D2A;
+  --line:      #332F2C;
+}

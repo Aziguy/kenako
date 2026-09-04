@@ -1,0 +1,104 @@
+/* ==========================================================================
+   Kenako — Vitrine publique (et point d'entrée du prototype)
+   ========================================================================== */
+
+.lp-nav {
+  position: sticky; top: 0; z-index: 60;
+  display: flex; align-items: center; gap: var(--sp-4);
+  padding: var(--sp-3) var(--sp-4);
+  background: color-mix(in srgb, var(--bg) 86%, transparent);
+  backdrop-filter: saturate(1.6) blur(12px);
+  border-bottom: 1px solid transparent;
+  transition: border-color var(--t-base), background var(--t-base);
+}
+.lp-nav.is-stuck { border-bottom-color: var(--line); }
+.lp-nav__links { display: none; gap: var(--sp-1); margin-left: var(--sp-4); }
+@media (min-width: 900px) { .lp-nav__links { display: flex; } }
+
+/* ------------------------------------------------------------------ Hero */
+.hero {
+  position: relative; overflow: hidden;
+  padding: clamp(48px, 9vw, 104px) 0 clamp(40px, 7vw, 80px);
+}
+.hero::before {
+  content: ""; position: absolute; inset: -20% -10% auto -10%; height: 120%;
+  background:
+    radial-gradient(46% 42% at 12% 8%, color-mix(in srgb, var(--accent) 26%, transparent), transparent 62%),
+    radial-gradient(40% 40% at 88% 22%, color-mix(in srgb, var(--primary) 22%, transparent), transparent 64%),
+    radial-gradient(36% 36% at 62% 96%, color-mix(in srgb, var(--herb) 16%, transparent), transparent 60%);
+  pointer-events: none; z-index: 0;
+}
+.hero > * { position: relative; z-index: 1; }
+.hero__grid { display: grid; gap: var(--sp-8); align-items: center; }
+@media (min-width: 900px) { .hero__grid { grid-template-columns: 1.05fr .95fr; gap: var(--sp-12); } }
+.hero__title {
+  font-family: var(--font-display); font-weight: 500;
+  font-size: clamp(36px, 6.4vw, 66px); line-height: 1.02; letter-spacing: -.028em;
+  text-wrap: balance;
+}
+.hero__title em { font-style: italic; color: var(--primary-strong); }
+.hero__lead { font-size: clamp(16px, 2vw, 20px); color: var(--ink-2); line-height: 1.55; max-width: 52ch; }
+.hero__cta { display: flex; flex-wrap: wrap; gap: var(--sp-3); }
+.hero__proof { display: flex; flex-wrap: wrap; gap: var(--sp-5); padding-top: var(--sp-4); }
+.hero__proof strong { display: block; font-family: var(--font-mono); font-size: 24px; letter-spacing: -.03em; }
+
+/* Collage de « photos » qui tient lieu de héros visuel */
+.collage { display: grid; grid-template-columns: 1fr 1fr; gap: var(--sp-3); }
+.collage > * { border-radius: var(--r-lg); box-shadow: var(--shadow-md); }
+.collage > *:nth-child(1) { aspect-ratio: 3 / 4; }
+.collage > *:nth-child(2) { aspect-ratio: 1; align-self: end; }
+.collage > *:nth-child(3) { aspect-ratio: 1; }
+.collage > *:nth-child(4) { aspect-ratio: 3 / 4; align-self: start; }
+
+/* -------------------------------------------------------------- Sections */
+.lp-section { padding: clamp(48px, 7vw, 88px) 0; }
+.lp-section--sunk { background: var(--bg-sunk); }
+.lp-head { display: grid; gap: var(--sp-3); max-width: 640px; margin-bottom: var(--sp-8); }
+.lp-head__title { font-family: var(--font-display); font-weight: 500; font-size: clamp(26px, 4vw, 40px); letter-spacing: -.02em; line-height: 1.1; }
+
+.value-card { display: grid; gap: var(--sp-3); padding: var(--sp-6); background: var(--surface); border-radius: var(--r-lg); box-shadow: var(--shadow-sm); }
+.value-card__num { font-family: var(--font-mono); font-size: 13px; font-weight: 700; color: var(--primary); letter-spacing: .1em; }
+.value-card__title { font-family: var(--font-display); font-size: 21px; font-weight: 500; }
+
+/* Comparatif commission */
+.compare { display: grid; gap: var(--sp-4); }
+@media (min-width: 700px) { .compare { grid-template-columns: 1fr 1fr; } }
+.compare__col { padding: var(--sp-6); border-radius: var(--r-lg); display: grid; gap: var(--sp-3); }
+.compare__col--them { background: var(--surface-2); border: 1px dashed var(--line-strong); }
+.compare__col--us { background: var(--surface); box-shadow: var(--shadow-md); border-top: 3px solid var(--herb); }
+.compare__amount { font-family: var(--font-mono); font-size: clamp(30px, 5vw, 42px); font-weight: 700; letter-spacing: -.03em; }
+
+/* Tarifs */
+.plan-grid { display: grid; gap: var(--sp-4); }
+@media (min-width: 860px) { .plan-grid { grid-template-columns: repeat(3, 1fr); align-items: start; } }
+.plan {
+  display: grid; gap: var(--sp-4); padding: var(--sp-6);
+  background: var(--surface); border-radius: var(--r-lg); box-shadow: var(--shadow-sm);
+}
+.plan--featured { box-shadow: var(--shadow-lg); border-top: 3px solid var(--primary); }
+.plan__price { font-family: var(--font-mono); font-size: 38px; font-weight: 700; letter-spacing: -.04em; }
+.plan__list { display: grid; gap: var(--sp-2); font-size: var(--fs-sm); }
+.plan__list li { display: flex; gap: var(--sp-2); align-items: flex-start; }
+.plan__list svg { color: var(--success); flex-shrink: 0; margin-top: 2px; }
+
+/* Accès aux espaces du prototype */
+.space-card {
+  display: grid; gap: var(--sp-3); padding: var(--sp-5); text-decoration: none; color: inherit;
+  background: var(--surface); border-radius: var(--r-lg); box-shadow: var(--shadow-sm);
+  transition: box-shadow var(--t-base), transform var(--t-base);
+}
+.space-card:hover { box-shadow: var(--shadow-md); transform: translateY(-2px); color: inherit; }
+.space-card__icon {
+  width: 44px; height: 44px; border-radius: var(--r-md); display: grid; place-items: center;
+  background: var(--primary-soft); color: var(--primary-strong);
+}
+.space-card__title { font-family: var(--font-display); font-size: 20px; font-weight: 500; }
+.space-card__go { font-size: var(--fs-sm); font-weight: 700; color: var(--primary-strong); display: inline-flex; align-items: center; gap: 5px; }
+
+/* Pied de page */
+.lp-footer { padding: var(--sp-10) 0 var(--sp-8); background: var(--ink); color: var(--bg); }
+.lp-footer a { color: var(--bg); opacity: .78; text-decoration: none; font-size: var(--fs-sm); }
+.lp-footer a:hover { opacity: 1; color: var(--bg); text-decoration: underline; }
+.lp-footer__grid { display: grid; gap: var(--sp-6); }
+@media (min-width: 700px) { .lp-footer__grid { grid-template-columns: 1.4fr 1fr 1fr 1fr; } }
+.lp-footer__title { font-size: var(--fs-xs); text-transform: uppercase; letter-spacing: .12em; opacity: .55; font-weight: 700; margin-bottom: var(--sp-3); }

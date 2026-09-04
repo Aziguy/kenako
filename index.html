@@ -1,0 +1,333 @@
+<!doctype html>
+<html lang="fr" data-theme="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#FBF6EF">
+<title>Kenako — les bonnes tables de votre quartier, sans commission</title>
+<meta name="description" content="Kenako est la plateforme des restaurants indépendants : chaque établissement a sa boutique en ligne, garde 100 % de ses commandes et paie un simple abonnement mensuel.">
+
+<meta property="og:title" content="Kenako — les bonnes tables de votre quartier, sans commission">
+<meta property="og:description" content="Commandez directement auprès de restaurants indépendants. Ce que vous payez leur revient.">
+<meta property="og:type" content="website">
+
+<link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
+<link rel="manifest" href="manifest.webmanifest">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&family=Instrument+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="assets/css/tokens.css">
+<link rel="stylesheet" href="assets/css/base.css">
+<link rel="stylesheet" href="assets/css/components.css">
+<link rel="stylesheet" href="assets/css/layout.css">
+<link rel="stylesheet" href="assets/css/client.css">
+<link rel="stylesheet" href="assets/css/landing.css">
+
+<script>
+  (function () {
+    try {
+      var t = localStorage.getItem('kenako:theme');
+      if (t !== 'light' && t !== 'dark') t = matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+      document.documentElement.dataset.theme = t;
+    } catch (e) { /* stockage indisponible */ }
+  })();
+</script>
+</head>
+<body>
+<a class="skip-link" href="#main">Aller au contenu principal</a>
+
+<header class="lp-nav">
+  <a class="topbar__brand" href="index.html">
+    <span class="logo-mark" aria-hidden="true">K</span>
+    <span style="display:grid;line-height:1.05">
+      <span>Kenako</span>
+      <span class="eyebrow" style="font-size:9.5px">Prototype</span>
+    </span>
+  </a>
+  <nav class="lp-nav__links" aria-label="Sections du site">
+    <a class="topbar__link" href="#produit">Le produit</a>
+    <a class="topbar__link" href="#restaurants">Restaurants</a>
+    <a class="topbar__link" href="#tarifs">Tarifs</a>
+    <a class="topbar__link" href="#prototype">Le prototype</a>
+  </nav>
+  <div class="topbar__actions">
+    <button type="button" class="btn btn--ghost btn--icon btn--sm" data-act="toggle-theme" aria-label="Basculer le thème clair ou sombre">
+      <svg class="theme-icon-light" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 14.5A8.5 8.5 0 0 1 9.5 4 8.5 8.5 0 1 0 20 14.5z"/></svg>
+      <svg class="theme-icon-dark" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M2 12h2M20 12h2M4.9 4.9l1.5 1.5M17.6 17.6l1.5 1.5M19.1 4.9l-1.5 1.5M6.4 17.6l-1.5 1.5"/></svg>
+    </button>
+    <a class="btn btn--outline btn--sm desktop-only" href="restaurateur.html">Espace restaurateur</a>
+    <a class="btn btn--primary btn--sm" href="client.html">Commander</a>
+  </div>
+</header>
+
+<main id="main">
+
+  <!-- ------------------------------------------------------------ Hero -->
+  <section class="hero">
+    <div class="wrap hero__grid">
+      <div class="stack" style="gap:var(--sp-5)">
+        <span class="badge badge--lg badge--success" style="justify-self:start">✓ Zéro commission sur vos commandes</span>
+        <h1 class="hero__title">Les bonnes tables de votre quartier,<br><em>sans intermédiaire gourmand</em></h1>
+        <p class="hero__lead">
+          Commandez directement auprès de restaurants indépendants. Ce que vous payez leur revient
+          intégralement : Kenako se rémunère sur un abonnement, jamais sur votre addition.
+        </p>
+        <div class="hero__cta">
+          <a class="btn btn--accent btn--lg" href="client.html">Découvrir les restaurants</a>
+          <a class="btn btn--outline btn--lg" href="restaurateur.html">Je suis restaurateur</a>
+        </div>
+        <div class="hero__proof">
+          <div><strong>0 %</strong><span class="tiny dim">de commission</span></div>
+          <div><strong>214</strong><span class="tiny dim">restaurants partenaires</span></div>
+          <div><strong>&lt; 60 s</strong><span class="tiny dim">pour commander</span></div>
+          <div><strong>0</strong><span class="tiny dim">compte obligatoire</span></div>
+        </div>
+      </div>
+
+      <div class="collage" aria-hidden="true">
+        <div class="thumb" style="--tint:#C9451A"><span class="thumb__label">Bavette d’aloyau, frites maison</span></div>
+        <div class="thumb" style="--tint:#157A5B"><span class="thumb__label">Bowl d’automne</span></div>
+        <div class="thumb" style="--tint:#F5A524"><span class="thumb__label">Thiéboudienne</span></div>
+        <div class="thumb" style="--tint:#B02E1F"><span class="thumb__label">Margherita au feu de bois</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- --------------------------------------------------------- Produit -->
+  <section class="lp-section lp-section--sunk" id="produit">
+    <div class="wrap">
+      <div class="lp-head">
+        <span class="eyebrow">Le produit</span>
+        <h2 class="lp-head__title">Une marque commune, des restaurants indépendants</h2>
+        <p class="lead">
+          Chaque établissement dispose de sa boutique en ligne — menu, commandes, livraison, fidélité —
+          et garde la main sur ses règles. Les clients, eux, découvrent tout le réseau sur une seule carte.
+        </p>
+      </div>
+
+      <div class="grid grid--3">
+        <article class="value-card">
+          <span class="value-card__num">01</span>
+          <h3 class="value-card__title">Zéro commission, vraiment</h3>
+          <p class="tiny muted" style="line-height:1.6">
+            Aucun prélèvement sur les commandes. Chaque paiement est encaissé directement par le restaurant,
+            sur ses propres comptes Stripe, PayPal ou Wero.
+          </p>
+        </article>
+        <article class="value-card">
+          <span class="value-card__num">02</span>
+          <h3 class="value-card__title">Commander en moins d’une minute</h3>
+          <p class="tiny muted" style="line-height:1.6">
+            Cinq taps depuis la fiche restaurant, sans créer de compte. Le compte se propose après,
+            comme une récompense — jamais comme une barrière.
+          </p>
+        </article>
+        <article class="value-card">
+          <span class="value-card__num">03</span>
+          <h3 class="value-card__title">La fidélité appartient au restaurant</h3>
+          <p class="tiny muted" style="line-height:1.6">
+            Points, tampons ou cashback : chaque adresse définit son programme, son parrainage
+            et ses promotions. Kenako n’en impose aucun.
+          </p>
+        </article>
+      </div>
+
+      <div class="compare" style="margin-top:var(--sp-8)">
+        <div class="compare__col compare__col--them">
+          <span class="eyebrow">Une plateforme à commission</span>
+          <p class="compare__amount" style="color:var(--ink-3)">− 30 %</p>
+          <p class="tiny muted" style="line-height:1.6">
+            Sur une commande de 100 €, le restaurant en encaisse environ 70. La marge disparaît,
+            le prix monte, et la relation client appartient à la plateforme.
+          </p>
+        </div>
+        <div class="compare__col compare__col--us">
+          <span class="eyebrow" style="color:var(--herb)">Avec Kenako</span>
+          <p class="compare__amount" style="color:var(--herb)">100 €</p>
+          <p class="tiny muted" style="line-height:1.6">
+            Le restaurant encaisse la totalité, et paie 29 à 149 € par mois selon sa formule.
+            Au-delà de quelques commandes, l’abonnement est déjà rentabilisé.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ----------------------------------------------------- Restaurants -->
+  <section class="lp-section" id="restaurants">
+    <div class="wrap">
+      <div class="lp-head">
+        <span class="eyebrow">Autour de vous</span>
+        <h2 class="lp-head__title">Les adresses mises en avant cette semaine</h2>
+      </div>
+      <div class="grid grid--cards" id="featured-restaurants"></div>
+      <div style="margin-top:var(--sp-6)">
+        <a class="btn btn--primary" href="client.html">Voir les 214 restaurants</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ---------------------------------------------------------- Tarifs -->
+  <section class="lp-section lp-section--sunk" id="tarifs">
+    <div class="wrap">
+      <div class="lp-head">
+        <span class="eyebrow">Devenir partenaire</span>
+        <h2 class="lp-head__title">Un abonnement, pas une dîme</h2>
+        <p class="lead">30 jours d’essai, sans engagement. Aucune commission sur les commandes, quelle que soit la formule.</p>
+      </div>
+
+      <div class="plan-grid">
+        <article class="plan">
+          <div>
+            <h3 class="value-card__title">Essentiel</h3>
+            <p class="tiny dim">Pour démarrer sa boutique en ligne</p>
+          </div>
+          <p><span class="plan__price">29 €</span><span class="tiny dim"> / mois</span></p>
+          <ul class="plan__list">
+            <li><span aria-hidden="true">✓</span> Boutique en ligne et carte illimitée en commandes</li>
+            <li><span aria-hidden="true">✓</span> Paiement carte et espèces</li>
+            <li><span aria-hidden="true">✓</span> Commande à table par QR code</li>
+            <li><span aria-hidden="true">✓</span> 1 compte staff</li>
+          </ul>
+          <a class="btn btn--outline btn--block" href="restaurateur.html#/inscription">Choisir Essentiel</a>
+        </article>
+
+        <article class="plan plan--featured">
+          <div class="between">
+            <div>
+              <h3 class="value-card__title">Signature</h3>
+              <p class="tiny dim">La formule la plus choisie</p>
+            </div>
+            <span class="badge badge--primary">Populaire</span>
+          </div>
+          <p><span class="plan__price">79 €</span><span class="tiny dim"> / mois</span></p>
+          <ul class="plan__list">
+            <li><span aria-hidden="true">✓</span> Tout Essentiel</li>
+            <li><span aria-hidden="true">✓</span> Livreurs internes et zones de livraison</li>
+            <li><span aria-hidden="true">✓</span> Fidélité, parrainage et codes promo</li>
+            <li><span aria-hidden="true">✓</span> Campagnes e-mail, SMS et push</li>
+            <li><span aria-hidden="true">✓</span> 10 comptes staff</li>
+          </ul>
+          <a class="btn btn--accent btn--block" href="restaurateur.html#/inscription">Choisir Signature</a>
+        </article>
+
+        <article class="plan">
+          <div>
+            <h3 class="value-card__title">Maison</h3>
+            <p class="tiny dim">Pour les groupes et les multi-sites</p>
+          </div>
+          <p><span class="plan__price">149 €</span><span class="tiny dim"> / mois</span></p>
+          <ul class="plan__list">
+            <li><span aria-hidden="true">✓</span> Tout Signature</li>
+            <li><span aria-hidden="true">✓</span> Jusqu’à 5 établissements</li>
+            <li><span aria-hidden="true">✓</span> API et connexion caisse</li>
+            <li><span aria-hidden="true">✓</span> Support prioritaire</li>
+          </ul>
+          <a class="btn btn--outline btn--block" href="restaurateur.html#/inscription">Choisir Maison</a>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ------------------------------------------------------- Prototype -->
+  <section class="lp-section" id="prototype">
+    <div class="wrap">
+      <div class="lp-head">
+        <span class="eyebrow">Prototype cliquable</span>
+        <h2 class="lp-head__title">Cinq espaces à explorer</h2>
+        <p class="lead">
+          Toutes les données sont fictives mais cohérentes d’un écran à l’autre.
+          Le prototype fonctionne au clavier, en mode sombre, et du mobile au grand écran.
+        </p>
+      </div>
+
+      <div class="grid grid--cards">
+        <a class="space-card" href="client.html">
+          <span class="space-card__icon" aria-hidden="true">🍽️</span>
+          <span class="space-card__title">Espace client</span>
+          <span class="tiny muted">Découverte, carte, fiche restaurant, panier, tunnel de commande, suivi, compte et commande à table.</span>
+          <span class="space-card__go">Ouvrir →</span>
+        </a>
+        <a class="space-card" href="restaurateur.html">
+          <span class="space-card__icon" aria-hidden="true">👩‍🍳</span>
+          <span class="space-card__title">Espace restaurateur</span>
+          <span class="tiny muted">Tableau de bord, Kanban des commandes, écran cuisine, carte, livraison, marketing, finances et analytique.</span>
+          <span class="space-card__go">Ouvrir →</span>
+        </a>
+        <a class="space-card" href="superadmin.html">
+          <span class="space-card__icon" aria-hidden="true">🛡️</span>
+          <span class="space-card__title">Console superadmin</span>
+          <span class="tiny muted">MRR, validation des dossiers, abonnements, CMS public, mise en avant, supervision en lecture seule.</span>
+          <span class="space-card__go">Ouvrir →</span>
+        </a>
+        <a class="space-card" href="livreur.html">
+          <span class="space-card__icon" aria-hidden="true">🛵</span>
+          <span class="space-card__title">Espace livreur</span>
+          <span class="tiny muted">Acceptation de course, navigation et preuve de livraison — pour les livreurs internes du restaurant.</span>
+          <span class="space-card__go">Ouvrir →</span>
+        </a>
+        <a class="space-card" href="design-system.html">
+          <span class="space-card__icon" aria-hidden="true">🎨</span>
+          <span class="space-card__title">Design system</span>
+          <span class="tiny muted">Palette, typographie, espacement, composants et tous leurs états, en clair comme en sombre.</span>
+          <span class="space-card__go">Ouvrir →</span>
+        </a>
+        <a class="space-card" href="client.html#/etats">
+          <span class="space-card__icon" aria-hidden="true">⚠️</span>
+          <span class="space-card__title">États limites</span>
+          <span class="tiny muted">Restaurant fermé, zone non livrée, panier vide, rupture de stock, paiement refusé, géolocalisation refusée…</span>
+          <span class="space-card__go">Ouvrir →</span>
+        </a>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="lp-footer">
+  <div class="wrap lp-footer__grid">
+    <div class="stack-sm">
+      <div class="row">
+        <span class="logo-mark" aria-hidden="true">K</span>
+        <strong style="font-family:var(--font-display);font-size:19px">Kenako</strong>
+      </div>
+      <p class="tiny" style="opacity:.7;line-height:1.6;max-width:34ch">
+        La plateforme des restaurants indépendants. Zéro commission sur les commandes,
+        un abonnement mensuel, et la relation client qui reste au restaurant.
+      </p>
+    </div>
+    <div>
+      <p class="lp-footer__title">Produit</p>
+      <ul class="stack-sm">
+        <li><a href="client.html">Espace client</a></li>
+        <li><a href="restaurateur.html">Espace restaurateur</a></li>
+        <li><a href="livreur.html">Espace livreur</a></li>
+        <li><a href="superadmin.html">Console superadmin</a></li>
+      </ul>
+    </div>
+    <div>
+      <p class="lp-footer__title">Partenaires</p>
+      <ul class="stack-sm">
+        <li><a href="#tarifs">Grille tarifaire</a></li>
+        <li><a href="restaurateur.html#/inscription">Devenir partenaire</a></li>
+        <li><a href="design-system.html">Design system</a></li>
+      </ul>
+    </div>
+    <div>
+      <p class="lp-footer__title">Légal</p>
+      <ul class="stack-sm">
+        <li><a href="#">Mentions légales</a></li>
+        <li><a href="#">CGU / CGV</a></li>
+        <li><a href="#">Confidentialité (RGPD)</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="wrap" style="margin-top:var(--sp-8);padding-top:var(--sp-4);border-top:1px solid rgba(255,255,255,.12)">
+    <p class="tiny" style="opacity:.6">© <span id="year">2026</span> Kenako — prototype de démonstration. Données fictives.</p>
+  </div>
+</footer>
+
+<script type="module" src="assets/js/landing.js"></script>
+</body>
+</html>

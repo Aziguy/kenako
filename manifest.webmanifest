@@ -1,0 +1,15 @@
+{
+  "name": "Kenako — les bonnes tables de votre quartier",
+  "short_name": "Kenako",
+  "description": "Commandez auprès de restaurants indépendants, sans commission et sans compte obligatoire.",
+  "lang": "fr",
+  "start_url": "./client.html",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#FBF6EF",
+  "theme_color": "#C9451A",
+  "icons": [
+    { "src": "assets/img/favicon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any" }
+  ]
+}

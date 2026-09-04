@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="fr" data-theme="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Kenako · Page introuvable</title>
+<link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,500&family=Instrument+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/tokens.css">
+<link rel="stylesheet" href="assets/css/base.css">
+<link rel="stylesheet" href="assets/css/components.css">
+<link rel="stylesheet" href="assets/css/layout.css">
+<script>
+  (function () {
+    try {
+      var t = localStorage.getItem('kenako:theme');
+      if (t !== 'light' && t !== 'dark') t = matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+      document.documentElement.dataset.theme = t;
+    } catch (e) { /* stockage indisponible */ }
+  })();
+</script>
+</head>
+<body>
+<main class="wrap wrap--narrow" style="min-height:100vh;display:grid;place-content:center;text-align:center;gap:var(--sp-5);justify-items:center">
+  <span class="logo-mark logo-mark--lg" aria-hidden="true">K</span>
+  <h1 class="display" style="font-size:clamp(32px,7vw,54px)">Rien à cette adresse</h1>
+  <p class="lead" style="max-width:44ch">
+    La page que vous cherchez n’existe pas — ou plus. Revenez à la vitrine pour retrouver
+    les restaurants et les espaces du prototype.
+  </p>
+  <div class="row-wrap" style="justify-content:center">
+    <a class="btn btn--primary" href="index.html">Retour à l’accueil</a>
+    <a class="btn btn--outline" href="client.html">Voir les restaurants</a>
+  </div>
+</main>
+</body>
+</html>

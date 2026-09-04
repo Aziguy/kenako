@@ -1,0 +1,464 @@
+<!doctype html>
+<html lang="fr" data-theme="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#FBF6EF">
+<title>Kenako · Design system</title>
+<meta name="description" content="Palette, typographie, espacement, composants et états du prototype Kenako.">
+
+<link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&family=Instrument+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="assets/css/tokens.css">
+<link rel="stylesheet" href="assets/css/base.css">
+<link rel="stylesheet" href="assets/css/components.css">
+<link rel="stylesheet" href="assets/css/layout.css">
+<link rel="stylesheet" href="assets/css/client.css">
+<link rel="stylesheet" href="assets/css/backoffice.css">
+<link rel="stylesheet" href="assets/css/landing.css">
+
+<style>
+  .ds-section { display: grid; gap: var(--sp-5); padding: var(--sp-10) 0; border-top: 1px solid var(--line); }
+  .ds-section:first-of-type { border-top: 0; }
+  .ds-title { font-family: var(--font-display); font-size: clamp(22px, 3.2vw, 32px); font-weight: 500; }
+  .ds-num { font-family: var(--font-mono); font-size: 12px; color: var(--primary); font-weight: 700; letter-spacing: .12em; }
+  .ds-grid { display: grid; gap: var(--sp-4); grid-template-columns: repeat(auto-fill, minmax(min(100%, 190px), 1fr)); }
+  .ds-row { display: grid; grid-template-columns: 130px 1fr; gap: var(--sp-4); align-items: center; padding: var(--sp-3) 0; border-top: 1px solid var(--line); }
+  .ds-row:first-child { border-top: 0; }
+  .ds-row__label { font-size: var(--fs-sm); font-weight: 600; color: var(--ink-2); }
+  .ds-row__items { display: flex; flex-wrap: wrap; gap: var(--sp-3); align-items: center; }
+  .ds-box { background: var(--surface); border-radius: var(--r-lg); box-shadow: var(--shadow-sm); padding: var(--sp-5); }
+  @media (max-width: 600px) { .ds-row { grid-template-columns: 1fr; gap: var(--sp-2); } }
+</style>
+
+<script>
+  (function () {
+    try {
+      var t = localStorage.getItem('kenako:theme');
+      if (t !== 'light' && t !== 'dark') t = matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+      document.documentElement.dataset.theme = t;
+    } catch (e) { /* stockage indisponible */ }
+  })();
+</script>
+</head>
+<body>
+<a class="skip-link" href="#main">Aller au contenu principal</a>
+
+<header class="lp-nav is-stuck">
+  <a class="topbar__brand" href="index.html">
+    <span class="logo-mark" aria-hidden="true">K</span>
+    <span style="display:grid;line-height:1.05"><span>Kenako</span>
+    <span class="eyebrow" style="font-size:9.5px">Design system</span></span>
+  </a>
+  <div class="topbar__actions">
+    <button type="button" class="btn btn--ghost btn--icon btn--sm" data-act="toggle-theme" aria-label="Basculer le thème clair ou sombre">
+      <svg class="theme-icon-light" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 14.5A8.5 8.5 0 0 1 9.5 4 8.5 8.5 0 1 0 20 14.5z"/></svg>
+      <svg class="theme-icon-dark" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M2 12h2M20 12h2M4.9 4.9l1.5 1.5M17.6 17.6l1.5 1.5M19.1 4.9l-1.5 1.5M6.4 17.6l-1.5 1.5"/></svg>
+    </button>
+    <a class="btn btn--outline btn--sm" href="index.html">Retour à la vitrine</a>
+  </div>
+</header>
+
+<main id="main" class="wrap" style="padding-bottom:var(--sp-16)">
+
+  <header style="padding:var(--sp-12) 0 var(--sp-8)">
+    <span class="eyebrow">Planche 00</span>
+    <h1 class="display" style="margin-top:var(--sp-3)">Design system</h1>
+    <p class="lead" style="margin-top:var(--sp-4);max-width:62ch">
+      Une identité chaleureuse côté client, dense et rapide côté back-office.
+      Palette <strong>Paprika &amp; Basilic</strong> : l’épice pour l’appétit, l’herbe fraîche pour la confiance.
+      Tout est déclinable en clair et en sombre, et rien ne repose sur la couleur seule.
+    </p>
+  </header>
+
+  <!-- 01 Palette -->
+  <section class="ds-section">
+    <div><span class="ds-num">01</span><h2 class="ds-title">Palette</h2></div>
+    <div class="ds-grid" id="palette"></div>
+    <p class="tiny dim">
+      Contrastes vérifiés en AA sur les paires texte / fond utilisées dans le produit.
+      Les statuts combinent toujours couleur + icône + texte.
+    </p>
+  </section>
+
+  <!-- 02 Typographie -->
+  <section class="ds-section">
+    <div><span class="ds-num">02</span><h2 class="ds-title">Typographie</h2></div>
+    <div class="grid grid--2">
+      <div class="ds-box stack">
+        <span class="eyebrow">Newsreader · titres &amp; noms de plats</span>
+        <div class="serif" style="font-size:52px;line-height:1">Display 52</div>
+        <div class="serif" style="font-size:34px;line-height:1.1">Titre 34 — Bavette d’aloyau</div>
+        <div class="serif" style="font-size:24px;line-height:1.2">Titre 24 — Le Comptoir de Marie</div>
+        <div class="serif" style="font-size:19px;line-height:1.3">Nom de plat 19 — Tarte tatin, crème crue</div>
+      </div>
+      <div class="ds-box stack">
+        <span class="eyebrow">Instrument Sans · interface &amp; données</span>
+        <p style="font-size:17px;line-height:1.55">Corps 17 — Commander prend moins d’une minute, sans créer de compte.</p>
+        <p class="muted" style="font-size:15px">Corps 15 — Description de plat, texte secondaire, aide contextuelle.</p>
+        <p class="tiny dim">Légende 13 — 4,7 ★ (312 avis) · 400 m · 25–35 min</p>
+        <p style="font-size:15px;font-weight:600">Bouton 15 semi-gras · <span class="num">19,00 €</span> tabulaire</p>
+        <p class="eyebrow">Étiquette 11 · capitales</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 03 Espacement & rayons -->
+  <section class="ds-section">
+    <div><span class="ds-num">03</span><h2 class="ds-title">Espacement &amp; rayons</h2></div>
+    <div class="ds-box">
+      <div class="ds-row">
+        <span class="ds-row__label">Échelle de 4</span>
+        <div class="ds-row__items" style="align-items:flex-end">
+          <div style="display:grid;gap:6px;justify-items:center"><div style="width:4px;height:4px;background:var(--primary);border-radius:2px"></div><span class="tiny dim num">4</span></div>
+          <div style="display:grid;gap:6px;justify-items:center"><div style="width:8px;height:8px;background:var(--primary);border-radius:2px"></div><span class="tiny dim num">8</span></div>
+          <div style="display:grid;gap:6px;justify-items:center"><div style="width:12px;height:12px;background:var(--primary);border-radius:2px"></div><span class="tiny dim num">12</span></div>
+          <div style="display:grid;gap:6px;justify-items:center"><div style="width:16px;height:16px;background:var(--primary);border-radius:2px"></div><span class="tiny dim num">16</span></div>
+          <div style="display:grid;gap:6px;justify-items:center"><div style="width:24px;height:24px;background:var(--primary);border-radius:2px"></div><span class="tiny dim num">24</span></div>
+          <div style="display:grid;gap:6px;justify-items:center"><div style="width:32px;height:32px;background:var(--primary);border-radius:2px"></div><span class="tiny dim num">32</span></div>
+          <div style="display:grid;gap:6px;justify-items:center"><div style="width:48px;height:48px;background:var(--primary);border-radius:2px"></div><span class="tiny dim num">48</span></div>
+        </div>
+      </div>
+      <div class="ds-row">
+        <span class="ds-row__label">Rayons</span>
+        <div class="ds-row__items">
+          <div class="center" style="width:70px;height:70px;border-radius:8px;background:var(--surface-2)"><span class="tiny num">8</span></div>
+          <div class="center" style="width:70px;height:70px;border-radius:12px;background:var(--surface-2)"><span class="tiny num">12</span></div>
+          <div class="center" style="width:70px;height:70px;border-radius:16px;background:var(--surface-2)"><span class="tiny num">16</span></div>
+          <div class="center" style="width:70px;height:70px;border-radius:24px;background:var(--surface-2)"><span class="tiny num">24</span></div>
+        </div>
+      </div>
+      <div class="ds-row">
+        <span class="ds-row__label">Élévation</span>
+        <div class="ds-row__items">
+          <div class="center" style="width:110px;height:70px;border-radius:12px;background:var(--surface);box-shadow:var(--shadow-xs)"><span class="tiny">xs</span></div>
+          <div class="center" style="width:110px;height:70px;border-radius:12px;background:var(--surface);box-shadow:var(--shadow-sm)"><span class="tiny">sm</span></div>
+          <div class="center" style="width:110px;height:70px;border-radius:12px;background:var(--surface);box-shadow:var(--shadow-md)"><span class="tiny">md</span></div>
+          <div class="center" style="width:110px;height:70px;border-radius:12px;background:var(--surface);box-shadow:var(--shadow-lg)"><span class="tiny">lg</span></div>
+        </div>
+      </div>
+      <div class="ds-row">
+        <span class="ds-row__label">Transitions</span>
+        <div class="ds-row__items tiny dim">
+          <span>fast 120 ms</span><span>base 180 ms</span><span>slow 260 ms</span>
+          <span>· courbe cubic-bezier(.2, 0, 0, 1) · respect de <code>prefers-reduced-motion</code></span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 04 Boutons -->
+  <section class="ds-section">
+    <div><span class="ds-num">04</span><h2 class="ds-title">Boutons</h2></div>
+    <div class="ds-box">
+      <div class="ds-row">
+        <span class="ds-row__label">Primaire</span>
+        <div class="ds-row__items">
+          <button class="btn btn--primary">Commander</button>
+          <button class="btn btn--primary" style="outline:3px solid var(--accent);outline-offset:2px">Focus</button>
+          <button class="btn btn--primary" data-act="demo-loading">Chargement</button>
+          <button class="btn btn--primary" disabled>Désactivé</button>
+        </div>
+      </div>
+      <div class="ds-row">
+        <span class="ds-row__label">CTA safran</span>
+        <div class="ds-row__items">
+          <button class="btn btn--accent">Ajouter · 19,00 €</button>
+          <button class="btn btn--accent btn--lg">Payer 43,50 €</button>
+          <button class="btn btn--accent" data-act="demo-loading">Chargement</button>
+          <button class="btn btn--accent" disabled>Désactivé</button>
+        </div>
+      </div>
+      <div class="ds-row">
+        <span class="ds-row__label">Secondaire</span>
+        <div class="ds-row__items">
+          <button class="btn btn--outline">Voir le menu</button>
+          <button class="btn">Neutre</button>
+          <button class="btn btn--ghost">Fantôme</button>
+          <button class="btn btn--sm btn--outline">Petit</button>
+        </div>
+      </div>
+      <div class="ds-row">
+        <span class="ds-row__label">Destructif</span>
+        <div class="ds-row__items">
+          <button class="btn btn--danger">Refuser la commande</button>
+          <button class="btn btn--success">Accepter</button>
+        </div>
+      </div>
+      <div class="ds-row">
+        <span class="ds-row__label">Chips</span>
+        <div class="ds-row__items">
+          <button class="chip" data-act="demo-chip" aria-pressed="true">Ouvert maintenant</button>
+          <button class="chip" data-act="demo-chip" aria-pressed="false">Livraison</button>
+          <button class="chip" data-act="demo-chip" aria-pressed="false">En promotion</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 05 Champs -->
+  <section class="ds-section">
+    <div><span class="ds-num">05</span><h2 class="ds-title">Champs de formulaire</h2></div>
+    <div class="grid grid--2">
+      <div class="ds-box stack">
+        <label class="field"><span class="field__label">Champ standard</span>
+          <input class="input" placeholder="12 rue de Charonne, 75011 Paris">
+          <span class="field__hint">Aide contextuelle sous le champ</span></label>
+        <label class="field"><span class="field__label">Champ en erreur</span>
+          <input class="input" value="0612" aria-invalid="true">
+          <span class="field__error">✕ Numéro de téléphone incomplet</span></label>
+        <label class="field"><span class="field__label">Champ désactivé</span>
+          <input class="input" value="SIRET vérifié" disabled></label>
+        <label class="field"><span class="field__label">Liste déroulante</span>
+          <select class="select"><option>Livraison</option><option>À emporter</option><option>Sur place</option></select></label>
+        <label class="field"><span class="field__label">Zone de texte</span>
+          <textarea class="textarea" rows="3" placeholder="Sans oignon, cuisson à cœur…"></textarea></label>
+      </div>
+      <div class="ds-box stack">
+        <span class="eyebrow">Sélections tactiles (44 px minimum)</span>
+        <button type="button" class="option" role="radio" aria-checked="true" data-act="demo-switch">
+          <span class="option__mark">✓</span><span>Saignant</span></button>
+        <button type="button" class="option" role="radio" aria-checked="false" data-act="demo-switch">
+          <span class="option__mark"></span><span>À point</span><span class="option__price">+ 0,00 €</span></button>
+        <button type="button" class="option" role="checkbox" aria-checked="true" data-act="demo-switch">
+          <span class="option__mark option__mark--box">✓</span><span>Sauce béarnaise</span><span class="option__price">+ 1,50 €</span></button>
+
+        <span class="eyebrow" style="margin-top:var(--sp-3)">Interrupteur &amp; segments</span>
+        <button type="button" class="switch" role="switch" aria-checked="true" data-act="demo-switch">
+          <span class="switch__track"></span><span class="tiny">Accepter les commandes</span></button>
+        <div class="segmented">
+          <button type="button" class="segmented__item" aria-selected="true">Post 1:1</button>
+          <button type="button" class="segmented__item" aria-selected="false">Story 9:16</button>
+        </div>
+
+        <span class="eyebrow" style="margin-top:var(--sp-3)">Quantité</span>
+        <div class="qty" style="justify-self:start">
+          <button class="qty__btn" aria-label="Diminuer">−</button>
+          <span class="qty__value">2</span>
+          <button class="qty__btn" aria-label="Augmenter">+</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 06 Badges & statuts -->
+  <section class="ds-section">
+    <div><span class="ds-num">06</span><h2 class="ds-title">Badges &amp; statuts</h2></div>
+    <div class="ds-box">
+      <div class="ds-row">
+        <span class="ds-row__label">Statuts</span>
+        <div class="ds-row__items">
+          <span class="badge badge--success"><span class="badge__dot"></span>Ouvert</span>
+          <span class="badge badge--danger">✕ Fermé</span>
+          <span class="badge badge--warning">! En rupture</span>
+          <span class="badge badge--info">● En livraison</span>
+          <span class="badge badge--outline">⏳ En attente</span>
+          <span class="badge badge--primary">Nouveau</span>
+          <span class="badge badge--accent">−20 % sur la 2e pizza</span>
+        </div>
+      </div>
+      <div class="ds-row">
+        <span class="ds-row__label">Progression</span>
+        <div class="ds-row__items" style="flex-direction:column;align-items:stretch;gap:var(--sp-3)">
+          <div class="progress"><div class="progress__bar" style="width:62%"></div></div>
+          <div class="progress progress--success"><div class="progress__bar" style="width:100%"></div></div>
+          <div class="steps"><span class="steps__item is-done"></span><span class="steps__item is-done"></span><span class="steps__item"></span></div>
+        </div>
+      </div>
+      <div class="ds-row">
+        <span class="ds-row__label">Onglets</span>
+        <div class="tabs" style="width:100%">
+          <button class="tab" data-act="demo-tab" aria-selected="true">Menu</button>
+          <button class="tab" data-act="demo-tab" aria-selected="false">Infos</button>
+          <button class="tab" data-act="demo-tab" aria-selected="false">Avis</button>
+          <button class="tab" data-act="demo-tab" aria-selected="false">Événements</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 07 Cartes -->
+  <section class="ds-section">
+    <div><span class="ds-num">07</span><h2 class="ds-title">Cartes</h2></div>
+    <div class="grid grid--cards">
+      <article class="card card--hover resto-card">
+        <div class="thumb resto-card__media" style="--tint:#C9451A">
+          <div class="resto-card__flags"><span class="badge badge--accent">Livraison offerte dès 25 €</span></div>
+        </div>
+        <button type="button" class="resto-card__fav is-on" aria-pressed="true" aria-label="Retirer des favoris">♥</button>
+        <div class="resto-card__body">
+          <div class="between" style="align-items:flex-start">
+            <h3 class="resto-card__name">Le Comptoir de Marie</h3>
+            <span class="row" style="gap:5px;flex-shrink:0"><span class="stars">★</span><span class="num strong">4,7</span><span class="tiny dim">(312)</span></span>
+          </div>
+          <p class="resto-card__meta"><span>Bistrot moderne</span><span>·</span><span>400 m</span><span>·</span><span>25–35 min</span></p>
+          <p class="resto-card__meta"><span class="badge badge--success">Livraison offerte</span><span class="tiny dim">Minimum 15,00 €</span></p>
+        </div>
+      </article>
+
+      <article class="card card--pad stack-sm">
+        <h3 class="card__title">Carte simple</h3>
+        <p class="tiny muted">Fond surface, rayon 16, ombre chaude et discrète. Pas de bordure dure.</p>
+        <dl class="kv"><dt>Formule</dt><dd>Signature</dd><dt>Statut</dt><dd>Actif</dd></dl>
+      </article>
+
+      <article class="stat">
+        <span class="stat__label">Chiffre d’affaires</span>
+        <span class="stat__value">1 284,50 €</span>
+        <span class="stat__delta stat__delta--up">▲ +16,6 % <span class="dim" style="font-weight:500">vs hier</span></span>
+      </article>
+
+      <article class="loyalty-card" style="--tint:#157A5B">
+        <div class="between" style="position:relative;z-index:1">
+          <strong style="font-family:var(--font-display);font-size:19px">Napoli Segreta</strong>
+          <span class="badge" style="background:rgba(255,255,255,.22);color:#fff">tampons</span>
+        </div>
+        <div class="stamps">
+          <span class="stamp is-on">✓</span><span class="stamp is-on">✓</span><span class="stamp is-on">✓</span>
+          <span class="stamp is-on">✓</span><span class="stamp is-on">✓</span><span class="stamp is-on">✓</span>
+          <span class="stamp is-on">✓</span><span class="stamp"></span><span class="stamp"></span><span class="stamp"></span>
+        </div>
+        <p class="tiny" style="position:relative;z-index:1;opacity:.92">Encore 3 pizzas pour une pizza offerte</p>
+      </article>
+    </div>
+  </section>
+
+  <!-- 08 Tableaux -->
+  <section class="ds-section">
+    <div><span class="ds-num">08</span><h2 class="ds-title">Tableaux (back-office)</h2></div>
+    <div class="card">
+      <div class="table-wrap">
+        <table class="table table--clickable">
+          <thead><tr><th aria-sort="ascending">Restaurant</th><th>Formule</th><th>Statut</th><th>Paiement</th><th>Commandes</th></tr></thead>
+          <tbody>
+            <tr><td><strong>Le Comptoir de Marie</strong><br><span class="tiny dim">Bistrot moderne</span></td><td><span class="badge badge--outline">Signature</span></td><td><span class="badge badge--success">✓ actif</span></td><td><span class="badge badge--danger">✕ impayé</span></td><td class="num">1 284</td></tr>
+            <tr class="is-selected"><td><strong>Napoli Segreta</strong><br><span class="tiny dim">Pizzeria napolitaine</span></td><td><span class="badge badge--outline">Signature</span></td><td><span class="badge badge--success">✓ actif</span></td><td><span class="badge badge--success">✓ à jour</span></td><td class="num">2 410</td></tr>
+            <tr><td><strong>Sushi Hanabi</strong><br><span class="tiny dim">Japonais</span></td><td><span class="badge badge--outline">Essentiel</span></td><td><span class="badge badge--warning">⏳ en attente</span></td><td><span class="badge badge--success">✓ à jour</span></td><td class="num">0</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- 09 Modales, toasts, bandeaux -->
+  <section class="ds-section">
+    <div><span class="ds-num">09</span><h2 class="ds-title">Modales, toasts &amp; bandeaux</h2></div>
+    <div class="ds-box stack">
+      <div class="ds-row">
+        <span class="ds-row__label">Feuilles</span>
+        <div class="ds-row__items">
+          <button class="btn btn--outline" data-act="demo-sheet">Ouvrir la feuille de plat</button>
+          <span class="tiny dim">Bottom-sheet sur mobile, modale centrée sur desktop.</span>
+        </div>
+      </div>
+      <div class="ds-row">
+        <span class="ds-row__label">Toasts</span>
+        <div class="ds-row__items">
+          <button class="btn btn--sm btn--outline" data-act="demo-toast" data-tone="success">Succès</button>
+          <button class="btn btn--sm btn--outline" data-act="demo-toast" data-tone="warning">Avertissement</button>
+          <button class="btn btn--sm btn--outline" data-act="demo-toast" data-tone="danger">Erreur</button>
+          <button class="btn btn--sm btn--outline" data-act="demo-toast" data-tone="info">Information</button>
+        </div>
+      </div>
+      <div class="stack-sm">
+        <div class="banner"><span class="banner__icon">i</span><span><strong class="banner__title">Information</strong>Plus que 6,50 € pour la livraison offerte.</span></div>
+        <div class="banner banner--success"><span class="banner__icon">✓</span><span><strong class="banner__title">Zéro commission</strong>Le paiement va directement au restaurant.</span></div>
+        <div class="banner banner--warning"><span class="banner__icon">!</span><span><strong class="banner__title">2 plats en rupture</strong>Île flottante, Poisson du jour.</span></div>
+        <div class="banner banner--danger"><span class="banner__icon">✕</span><span><strong class="banner__title">Paiement refusé</strong>Vérifiez le numéro ou changez de moyen de paiement.</span></div>
+        <div class="readonly-banner"><span aria-hidden="true">👁</span><span>Vue en lecture seule — aucune action possible sur les commandes.</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 10 États vides & chargement -->
+  <section class="ds-section">
+    <div><span class="ds-num">10</span><h2 class="ds-title">États vides &amp; chargement</h2></div>
+    <div class="grid grid--2">
+      <div class="card">
+        <div class="empty">
+          <div class="empty__art">🧺</div>
+          <p class="empty__title">Votre panier est vide</p>
+          <p class="empty__text">Ajoutez un plat depuis la carte d’un restaurant — commander prend moins d’une minute.</p>
+          <a class="btn btn--primary" href="client.html">Découvrir les restaurants</a>
+        </div>
+      </div>
+      <div class="card">
+        <div class="skeleton skeleton--media" style="border-radius:0"></div>
+        <div class="stack-sm" style="padding:var(--sp-4)">
+          <div class="skeleton skeleton--title"></div>
+          <div class="skeleton skeleton--text" style="width:82%"></div>
+          <div class="skeleton skeleton--text" style="width:48%"></div>
+          <div class="skeleton" style="height:38px;width:120px;border-radius:var(--r-md)"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 11 Timeline -->
+  <section class="ds-section">
+    <div><span class="ds-num">11</span><h2 class="ds-title">Suivi de commande</h2></div>
+    <div class="card card--pad" style="max-width:520px">
+      <div class="timeline">
+        <div class="timeline__item is-done">
+          <div class="timeline__rail"><span class="timeline__dot">✓</span><span class="timeline__line"></span></div>
+          <div class="timeline__body"><p class="timeline__label">Commande reçue</p><p class="timeline__hint">Le restaurant a été prévenu</p></div>
+        </div>
+        <div class="timeline__item is-done">
+          <div class="timeline__rail"><span class="timeline__dot">✓</span><span class="timeline__line"></span></div>
+          <div class="timeline__body"><p class="timeline__label">Acceptée</p><p class="timeline__hint">Marie a confirmé votre commande</p></div>
+        </div>
+        <div class="timeline__item is-current">
+          <div class="timeline__rail"><span class="timeline__dot">🔥</span><span class="timeline__line"></span></div>
+          <div class="timeline__body"><p class="timeline__label">En préparation</p><p class="timeline__hint">Ça chauffe en cuisine</p></div>
+        </div>
+        <div class="timeline__item">
+          <div class="timeline__rail"><span class="timeline__dot">🛵</span></div>
+          <div class="timeline__body"><p class="timeline__label">En livraison</p><p class="timeline__hint">À venir</p></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 12 Icônes -->
+  <section class="ds-section">
+    <div><span class="ds-num">12</span><h2 class="ds-title">Jeu d’icônes</h2></div>
+    <div class="ds-grid" id="icon-grid" style="grid-template-columns:repeat(auto-fill,minmax(86px,1fr))"></div>
+    <p class="tiny dim">Trait de 1,7 px, 24 × 24, héritant de <code>currentColor</code>. Aucune information portée par l’icône seule.</p>
+  </section>
+
+  <!-- 13 Accessibilité -->
+  <section class="ds-section">
+    <div><span class="ds-num">13</span><h2 class="ds-title">Règles transverses</h2></div>
+    <div class="grid grid--2">
+      <div class="ds-box stack-sm">
+        <h3 class="card__title">Accessibilité</h3>
+        <ul class="stack-sm tiny muted">
+          <li>▸ Contraste AA minimum sur tous les textes et icônes porteuses de sens.</li>
+          <li>▸ Focus visible : contour safran de 3 px, décalé de 2 px.</li>
+          <li>▸ Cibles tactiles de 44 px minimum, actions principales atteignables au pouce.</li>
+          <li>▸ Jamais la couleur seule : chaque statut combine couleur, icône et texte.</li>
+          <li>▸ <code>prefers-reduced-motion</code> désactive animations et défilement animé.</li>
+          <li>▸ Lien d’évitement vers le contenu principal sur chaque page.</li>
+        </ul>
+      </div>
+      <div class="ds-box stack-sm">
+        <h3 class="card__title">Responsive</h3>
+        <ul class="stack-sm tiny muted">
+          <li>▸ Mobile d’abord : navigation basse fixe, barres d’action au pouce.</li>
+          <li>▸ Les modales deviennent des bottom-sheets sous 768 px.</li>
+          <li>▸ Le back-office passe de la colonne latérale (≥ 900 px) à la navigation basse.</li>
+          <li>▸ Tableaux et Kanban défilent horizontalement dans leur propre conteneur.</li>
+          <li>▸ Aucun défilement horizontal de page, quelle que soit la largeur.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+</main>
+
+<script type="module" src="assets/js/design-system.js"></script>
+</body>
+</html>
