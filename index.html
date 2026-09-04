@@ -41,9 +41,9 @@
 <header class="lp-nav">
   <a class="topbar__brand" href="index.html">
     <span class="logo-mark" aria-hidden="true">K</span>
-    <span style="display:grid;line-height:1.05">
+    <span style="display:grid;line-height:1.05;min-width:0">
       <span>Kenako</span>
-      <span class="eyebrow" style="font-size:9.5px">Prototype</span>
+      <span class="brand-tagline">Qu’est-ce qu’on mange…</span>
     </span>
   </a>
   <nav class="lp-nav__links" aria-label="Sections du site">
@@ -53,12 +53,18 @@
     <a class="topbar__link" href="#prototype">Le prototype</a>
   </nav>
   <div class="topbar__actions">
-    <button type="button" class="btn btn--ghost btn--icon btn--sm" data-act="toggle-theme" aria-label="Basculer le thème clair ou sombre">
+    <button type="button" class="btn btn--ghost btn--icon btn--sm lp-nav__desktop" data-act="toggle-theme" aria-label="Basculer le thème clair ou sombre">
       <svg class="theme-icon-light" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 14.5A8.5 8.5 0 0 1 9.5 4 8.5 8.5 0 1 0 20 14.5z"/></svg>
       <svg class="theme-icon-dark" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M2 12h2M20 12h2M4.9 4.9l1.5 1.5M17.6 17.6l1.5 1.5M19.1 4.9l-1.5 1.5M6.4 17.6l-1.5 1.5"/></svg>
     </button>
-    <a class="btn btn--outline btn--sm desktop-only" href="restaurateur.html">Espace restaurateur</a>
+    <a class="btn btn--outline btn--sm lp-nav__desktop" href="restaurateur.html">Espace restaurateur</a>
     <a class="btn btn--primary btn--sm" href="client.html">Commander</a>
+    <button type="button" class="btn btn--outline btn--icon btn--sm lp-nav__menu" data-act="open-menu"
+      aria-label="Ouvrir le menu" aria-haspopup="dialog">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true">
+        <path d="M4 7h16M4 12h16M4 17h16"/>
+      </svg>
+    </button>
   </div>
 </header>
 
@@ -292,6 +298,7 @@
         <span class="logo-mark" aria-hidden="true">K</span>
         <strong style="font-family:var(--font-display);font-size:19px">Kenako</strong>
       </div>
+      <p class="brand-tagline brand-tagline--lg">Qu’est-ce qu’on mange…</p>
       <p class="tiny" style="opacity:.7;line-height:1.6;max-width:34ch">
         La plateforme des restaurants indépendants. Zéro commission sur les commandes,
         un abonnement mensuel, et la relation client qui reste au restaurant.

@@ -7,6 +7,9 @@
 import { html, render, delegate } from './core/dom.js';
 import { initTheme, toggleTheme } from './core/theme.js';
 import { rating, number, distance, deliveryFee } from './core/format.js';
+import { openModal } from './core/sheet.js';
+import { icon } from './core/icons.js';
+import { SPACES } from './core/shell.js';
 import { RESTAURANTS } from './data/restaurants.js';
 import { CMS } from './data/admin.js';
 
@@ -42,10 +45,60 @@ render('#featured-restaurants', html`
   )}
 `);
 
+/* ------------------------------------------------- Menu de navigation mobile */
+
+const SECTIONS = [
+  { href: '#produit', label: 'Le produit', hint: 'Zéro commission, comment ça marche' },
+  { href: '#restaurants', label: 'Restaurants', hint: 'Les adresses mises en avant' },
+  { href: '#tarifs', label: 'Tarifs', hint: 'Devenir partenaire' },
+  { href: '#prototype', label: 'Le prototype', hint: 'Les cinq espaces à explorer' },
+];
+
+function menuBody() {
+  const sections = SECTIONS.map(
+    (s) => `<a class="option" href="${s.href}" data-act="sheet-close">
+      <span style="display:grid;gap:2px;flex:1;min-width:0">
+        <span class="strong tiny">${s.label}</span>
+        <span class="tiny dim">${s.hint}</span>
+      </span>
+      <span class="dim" style="display:grid">${icon('chevronRight', { size: 16 })}</span>
+    </a>`
+  ).join('');
+
+  const spaces = SPACES.filter((s) => s.id !== 'landing')
+    .map((s) => `<a class="navsheet__item" href="${s.href}">${icon(s.icon, { size: 22 })}<span>${s.label}</span></a>`)
+    .join('');
+
+  return `
+    <div class="stack-sm">
+      <p class="eyebrow">Le site</p>
+      ${sections}
+    </div>
+    <div class="stack-sm">
+      <p class="eyebrow">Les espaces du prototype</p>
+      <div class="navsheet">${spaces}</div>
+    </div>
+    <div class="stack-sm">
+      <p class="eyebrow">Apparence</p>
+      <button type="button" class="option" data-act="toggle-theme">
+        <span class="option__mark" style="border:0;background:transparent;color:var(--ink)">
+          <span class="theme-icon-light">${icon('moon', { size: 16 })}</span>
+          <span class="theme-icon-dark">${icon('sun', { size: 16 })}</span>
+        </span>
+        <span class="tiny strong">Basculer le thème clair / sombre</span>
+      </button>
+    </div>`;
+}
+
 /* --------------------------------------------------------- Interactions */
 
 delegate(document.body, 'click', {
   'toggle-theme': () => toggleTheme(),
+  'open-menu': () => openModal({
+    title: '<h2 style="font-size:20px">Menu</h2>',
+    body: menuBody(),
+    foot: '<a class="btn btn--accent btn--block" href="client.html">Découvrir les restaurants</a>',
+  }),
 });
 
 const nav = document.querySelector('.lp-nav');

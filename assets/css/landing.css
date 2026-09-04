@@ -13,7 +13,47 @@
 }
 .lp-nav.is-stuck { border-bottom-color: var(--line); }
 .lp-nav__links { display: none; gap: var(--sp-1); margin-left: var(--sp-4); }
-@media (min-width: 900px) { .lp-nav__links { display: flex; } }
+
+/* Sous 900 px, les liens laissent place à un bouton menu qui ouvre une feuille. */
+.lp-nav__menu { display: inline-flex; }
+.lp-nav__desktop { display: none; }
+@media (min-width: 900px) {
+  .lp-nav__links { display: flex; }
+  .lp-nav__menu { display: none; }
+  .lp-nav__desktop { display: inline-flex; }
+}
+
+/* --------------------------------------------------------------- Slogan
+   « Qu'est-ce qu'on mange… » — serif italique, dégradé paprika → safran,
+   accordé au monogramme. Le `color` sert de repli si `background-clip: text`
+   n'est pas géré. */
+.brand-tagline {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-weight: 600;
+  font-size: 13.5px;
+  line-height: 1.25;
+  letter-spacing: .012em;
+  color: var(--primary-strong);
+  background-image: linear-gradient(96deg, var(--primary) 12%, var(--accent-strong) 92%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  padding-block: 1px;               /* évite que les jambages soient rognés */
+}
+@media (min-width: 480px) { .brand-tagline { font-size: 15px; } }
+@media (min-width: 900px) { .brand-tagline { font-size: 16px; } }
+
+/* Version large, pour le pied de page */
+.brand-tagline--lg {
+  font-size: 19px;
+  white-space: normal;
+  background-image: linear-gradient(96deg, var(--accent) 8%, var(--primary-strong) 96%);
+}
+@media (min-width: 480px) { .brand-tagline--lg { font-size: 21px; } }
 
 /* ------------------------------------------------------------------ Hero */
 .hero {
