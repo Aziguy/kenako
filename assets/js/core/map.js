@@ -29,6 +29,8 @@ export function createMap(container, options = {}) {
 
   const L = window.L;
   const { center = [48.8607, 2.3702], zoom = 13, interactive = true } = options;
+  let userMarker = null;
+  let radiusCircle = null;
   const map = L.map(container, {
     center, zoom, zoomControl: false, attributionControl: true,
     dragging: interactive, scrollWheelZoom: interactive, doubleClickZoom: interactive,
@@ -38,7 +40,24 @@ export function createMap(container, options = {}) {
   L.tileLayer(TILE_URL, { attribution: ATTRIBUTION, maxZoom: 19 }).addTo(map);
   if (interactive) L.control.zoom({ position: 'bottomright' }).addTo(map);
 
-  const layers = L.layerGroup().addTo(map);
+  /*
+   * `leaflet.markercluster` regroupe les marqueurs au dézoom. La librairie est
+   * facultative : sans elle, on retombe sur un simple groupe de calques.
+   */
+  const clustered = Boolean(options.cluster && L.markerClusterGroup);
+  const layers = clustered
+    ? L.markerClusterGroup({
+        maxClusterRadius: 60,
+        showCoverageOnHover: false,
+        iconCreateFunction: (cluster) =>
+          L.divIcon({
+            className: 'ken-cluster-wrap',
+            html: `<span class="ken-cluster">${cluster.getChildCount()}</span>`,
+            iconSize: [42, 42],
+          }),
+      }).addTo(map)
+    : L.layerGroup().addTo(map);
+  const shapes = L.layerGroup().addTo(map);
 
   return {
     map,
@@ -64,6 +83,25 @@ export function createMap(container, options = {}) {
       });
     },
 
+    /** Pose le point bleu « vous êtes ici », en dehors du regroupement. */
+    setUserPosition(lat, lng, label = 'Votre position') {
+      userMarker?.remove();
+      userMarker = L.marker([lat, lng], {
+        icon: L.divIcon({ className: 'ken-me-wrap', html: '<span class="ken-me"></span>', iconSize: [20, 20], iconAnchor: [10, 10] }),
+        title: label,
+        interactive: false,
+        zIndexOffset: -100,
+      }).addTo(map);
+    },
+
+    /** Cercle de rayon maximal de livraison, en pointillés. */
+    setRadius(lat, lng, metres, color = 'var(--ink-3)') {
+      radiusCircle?.remove();
+      radiusCircle = L.circle([lat, lng], {
+        radius: metres, color, weight: 1.5, dashArray: '6 6', fill: false, interactive: false,
+      }).addTo(map);
+    },
+
     /** Trace des polygones de zone de livraison. */
     setZones(zones) {
       zones.forEach((zone) => {
@@ -71,7 +109,7 @@ export function createMap(container, options = {}) {
           color: zone.color, weight: 2, fillColor: zone.color, fillOpacity: 0.14,
         })
           .bindTooltip(`${zone.name} — ${zone.rule}`, { sticky: true })
-          .addTo(layers);
+          .addTo(shapes);
       });
     },
 

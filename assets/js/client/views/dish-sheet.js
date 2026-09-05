@@ -144,8 +144,12 @@ function body() {
 }
 
 function foot() {
-  const { qty } = draft;
+  const { qty, config, required } = draft;
   const total = unitPrice() * qty;
+  // Le choix obligatoire manquant désactive le bouton et le dit dans son libellé,
+  // plutôt que de laisser cliquer pour afficher une erreur ensuite.
+  const missing = config.required && (!required || required === 'none');
+
   return `
     <div class="row" style="gap:var(--sp-3)">
       <div class="qty">
@@ -153,8 +157,10 @@ function foot() {
         <span class="qty__value">${qty}</span>
         <button type="button" class="qty__btn" data-act="qty" data-delta="1" aria-label="Augmenter la quantité">${icon('plus', { size: 16 })}</button>
       </div>
-      <button type="button" class="btn btn--accent" style="flex:1" data-act="add">
-        Ajouter · <span class="num">${money(total)}</span>
+      <button type="button" class="btn btn--accent" style="flex:1" data-act="add"${missing ? ' disabled' : ''}>
+        ${missing
+          ? `Choisissez : ${esc(config.required.label.toLowerCase())}`
+          : `Ajouter · <span class="num">${money(total)}</span>`}
       </button>
     </div>`;
 }

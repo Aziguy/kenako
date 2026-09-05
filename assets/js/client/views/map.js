@@ -14,6 +14,7 @@ import { icon } from '../../core/icons.js';
 import { rating, number, distance, deliveryFee, money } from '../../core/format.js';
 import { getRestaurant, MODE_LABELS, MODE_ICONS } from '../../data/restaurants.js';
 import { createMap } from '../../core/map.js';
+import { ADDRESSES } from '../../data/client.js';
 import { restoRow } from '../components.js';
 import { selectRestaurants } from './home.js';
 
@@ -142,13 +143,15 @@ export function mount(ctx) {
   if (!container) return;
 
   handle?.destroy();
-  handle = createMap(container, { center: [48.8639, 2.3652], zoom: 13 });
+  handle = createMap(container, { center: [48.8639, 2.3652], zoom: 13, cluster: true });
   if (!handle) return;
 
   const list = selectRestaurants(ctx.state);
   const activeId = ctx.state.mapSelected;
 
   drawMarkers(ctx, list, activeId);
+  const me = ADDRESSES.find((a) => a.line === ctx.state.address) || ADDRESSES[0];
+  if (me) handle.setUserPosition(me.lat, me.lng, `Vous : ${me.label}`);
   if (list.length) handle.fit(list);
   handle.invalidate();
 

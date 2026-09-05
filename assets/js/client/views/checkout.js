@@ -35,7 +35,7 @@ export function view(ctx) {
   const t = computeTotals({ cart: state.cart, restId: state.restId, mode: state.mode, promoCode: state.promoCode, tip: state.tip });
 
   return html`
-    <div class="wrap wrap--narrow" style="padding-bottom:140px">
+    <div class="wrap" style="padding-bottom:140px;max-width:1100px">
       ${subHeader(STEP_TITLES[step - 1], { back: step === 1 ? '#/panier' : `#/commande/${step - 1}` })}
 
       <div class="stack" style="gap:var(--sp-5)">
@@ -46,11 +46,14 @@ export function view(ctx) {
           <p class="tiny dim">Étape ${step} sur 3 · ${t.restaurant.name}</p>
         </div>
 
-        ${step === 1 ? stepMode(state, t) : ''}
-        ${step === 2 ? stepDetails(state, t) : ''}
-        ${step === 3 ? stepPayment(state, t) : ''}
-
-        ${summary(t, state)}
+        <div class="checkout-grid">
+          <div class="stack">
+            ${step === 1 ? stepMode(state, t) : ''}
+            ${step === 2 ? stepDetails(state, t) : ''}
+            ${step === 3 ? stepPayment(state, t) : ''}
+          </div>
+          <div class="checkout-aside">${summary(t, state)}</div>
+        </div>
       </div>
     </div>
 

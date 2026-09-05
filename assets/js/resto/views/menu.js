@@ -101,6 +101,10 @@ export function view(ctx) {
                       </button>
                       <button type="button" class="btn btn--ghost btn--icon btn--sm" data-act="edit-dish" data-id="${item.id}"
                         aria-label="Modifier ${item.name}">${raw(icon('edit', { size: 16 }))}</button>
+                      <button type="button" class="btn btn--ghost btn--icon btn--sm hint" data-hint="Supprimer"
+                        data-act="delete-dish" data-id="${item.id}" aria-label="Supprimer ${item.name}">
+                        ${raw(icon('trash', { size: 16 }))}
+                      </button>
                     </div>
                   </article>`
                 )}
@@ -171,3 +175,36 @@ export function dishForm(item) {
 }
 
 const escapeAttr = (s = '') => String(s).replace(/"/g, '&quot;');
+
+/**
+ * Réordonnancement des plats par glisser-déposer.
+ * Les écouteurs sont reposés à chaque rendu : le DOM est reconstruit à neuf.
+ */
+export function mount(ctx) {
+  let dragged = null;
+
+  document.querySelectorAll('.menu-row[draggable="true"]').forEach((row) => {
+    row.addEventListener('dragstart', (e) => {
+      dragged = row.dataset.item;
+      row.classList.add('is-dragging');
+      e.dataTransfer.effectAllowed = 'move';
+      e.dataTransfer.setData('text/plain', dragged);
+    });
+    row.addEventListener('dragend', () => {
+      row.classList.remove('is-dragging');
+      document.querySelectorAll('.menu-row.is-over').forEach((r) => r.classList.remove('is-over'));
+    });
+    row.addEventListener('dragover', (e) => {
+      e.preventDefault();
+      if (row.dataset.item !== dragged) row.classList.add('is-over');
+    });
+    row.addEventListener('dragleave', () => row.classList.remove('is-over'));
+    row.addEventListener('drop', (e) => {
+      e.preventDefault();
+      row.classList.remove('is-over');
+      const from = dragged || e.dataTransfer.getData('text/plain');
+      ctx.onReorderDish?.(from, row.dataset.item);
+      dragged = null;
+    });
+  });
+}

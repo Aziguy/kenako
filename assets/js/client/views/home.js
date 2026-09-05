@@ -55,6 +55,7 @@ export function view(ctx) {
   return html`
     <div class="wrap">
       <section class="searchbar">
+        <h1 class="home-title">Qu'est-ce qui vous ferait plaisir&nbsp;?</h1>
         <div class="searchbar__row">
           <label class="input-group" style="flex:1">
             <span class="sr-only">Rechercher un restaurant ou un plat</span>

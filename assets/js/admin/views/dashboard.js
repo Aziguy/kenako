@@ -9,7 +9,7 @@ import { html, raw } from '../../core/dom.js';
 import { icon } from '../../core/icons.js';
 import { moneyShort, number, percent } from '../../core/format.js';
 import { areaChart, barList, donut } from '../../core/charts.js';
-import { ADMIN_KPI, MRR_12, MRR_MONTHS, CITIES, ADMIN_PLANS, RESTAURATEURS } from '../../data/admin.js';
+import { ADMIN_KPI, MRR_12, MRR_MONTHS, CITIES, ADMIN_PLANS, RESTAURATEURS, UNPAID, FLAGGED_REVIEWS } from '../../data/admin.js';
 import { statTile, panel } from '../components.js';
 import { createMap } from '../../core/map.js';
 
@@ -50,8 +50,31 @@ export function view() {
         ${statTile({ label: 'Restaurants actifs', value: number(ADMIN_KPI.active), current: ADMIN_KPI.active, previous: ADMIN_KPI.active - 8 })}
         ${statTile({ label: 'Conversion d’essai', value: percent(ADMIN_KPI.trialConv / 100), current: ADMIN_KPI.trialConv, previous: ADMIN_KPI.trialConvPrev })}
         ${statTile({ label: 'Churn mensuel', value: percent(ADMIN_KPI.churn / 100), current: ADMIN_KPI.churn, previous: ADMIN_KPI.churnPrev })}
+        ${statTile({ label: 'En attente', value: number(ADMIN_KPI.pending) })}
+        ${statTile({ label: 'Suspendus', value: number(ADMIN_KPI.suspended) })}
         ${statTile({ label: 'Nouveaux inscrits', value: number(ADMIN_KPI.signups), current: ADMIN_KPI.signups, previous: ADMIN_KPI.signupsPrev })}
       </div>
+
+      ${panel(
+        'À traiter maintenant',
+        html`<div class="grid grid--3">
+          <a class="card card--flat card--pad stack-sm" href="#/restaurateurs" style="text-decoration:none;color:inherit">
+            <span class="stat__label">Comptes à valider</span>
+            <span class="stat__value">${number(pending.length)}</span>
+            <span class="tiny strong" style="color:var(--primary-strong)">Ouvrir la file →</span>
+          </a>
+          <a class="card card--flat card--pad stack-sm" href="#/abonnements" style="text-decoration:none;color:inherit">
+            <span class="stat__label">Impayés</span>
+            <span class="stat__value">${moneyShort(UNPAID.reduce((sum, u) => sum + u.amount, 0))}</span>
+            <span class="tiny strong" style="color:var(--primary-strong)">${number(UNPAID.length)} comptes · relancer →</span>
+          </a>
+          <a class="card card--flat card--pad stack-sm" href="#/support" style="text-decoration:none;color:inherit">
+            <span class="stat__label">Avis signalés</span>
+            <span class="stat__value">${number(FLAGGED_REVIEWS.length)}</span>
+            <span class="tiny strong" style="color:var(--primary-strong)">Modérer →</span>
+          </a>
+        </div>`
+      )}
 
       <div class="grid grid--sidebar">
         ${panel(
@@ -106,7 +129,9 @@ export function view() {
             </div>
             <div class="readonly-banner" style="flex:1;min-width:260px">
               ${raw(icon('eye', { size: 18 }))}
-              <span>Indicateur d’usage uniquement. Kenako ne perçoit aucune commission et n’encaisse jamais l’argent des commandes.</span>
+              <span>${number(ADMIN_KPI.orders30)} commandes traitées sur 30 jours — indicateur d’usage de la
+              plateforme uniquement. Kenako n’encaisse aucune de ces commandes et ne peut ni les modifier
+              ni les annuler.</span>
             </div>
           </div>`
       )}

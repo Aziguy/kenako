@@ -202,3 +202,20 @@ caractères.
 et la position du curseur avant le rendu, puis les restaure. Par ailleurs,
 seuls les champs qui doivent redessiner la page (recherche) déclenchent un
 rendu, en différé ; les autres écrivent dans le magasin en mode `silent`.
+
+---
+
+## P13 — Les calques de regroupement n'acceptent pas les polygones
+
+**Symptôme :** en activant `leaflet.markercluster` sur la carte client, les
+zones de livraison du back-office risquaient de disparaître.
+
+**Cause :** `setZones()` ajoutait les polygones au même calque que les
+marqueurs. Un `markerClusterGroup` n'accepte que des marqueurs.
+
+**Correctif :** `core/map.js` maintient deux calques distincts — `layers` pour
+les marqueurs (regroupés ou non) et `shapes` pour les polygones et le cercle
+de rayon.
+
+**Leçon :** avant d'échanger un `layerGroup` contre un groupe spécialisé,
+vérifier tout ce qu'on y ajoute ailleurs dans le code.

@@ -5,6 +5,11 @@
 
 /* ------------------------------------------------------- Barre de recherche */
 .searchbar { display: grid; gap: var(--sp-3); padding: var(--sp-4) 0 var(--sp-3); }
+.home-title {
+  font-family: var(--font-display); font-weight: 500;
+  font-size: clamp(28px, 4.4vw, 46px); line-height: 1.05; letter-spacing: -.025em;
+  max-width: 16ch; text-wrap: balance; margin-bottom: var(--sp-1);
+}
 .searchbar__row { display: flex; gap: var(--sp-2); }
 .searchbar__row .input-group { flex: 1; }
 
@@ -142,6 +147,11 @@
 .qty__btn:hover { background: var(--surface-2); }
 .qty__value { min-width: 26px; text-align: center; font-weight: 700; font-family: var(--font-mono); font-size: var(--fs-sm); }
 
+/* Tunnel : formulaire à gauche, récapitulatif collant à droite sur desktop. */
+.checkout-grid { display: grid; gap: var(--sp-5); grid-template-columns: minmax(0, 1fr); }
+@media (min-width: 900px) { .checkout-grid { grid-template-columns: minmax(0, 1fr) 360px; align-items: start; } }
+@media (min-width: 900px) { .checkout-aside { position: sticky; top: calc(var(--topbar-h) + var(--sp-4)); } }
+
 .summary { display: grid; gap: var(--sp-2); font-size: var(--fs-sm); }
 .summary__row { display: flex; justify-content: space-between; gap: var(--sp-3); }
 .summary__row--total { font-size: var(--fs-lg); font-weight: 700; padding-top: var(--sp-3); border-top: 1px solid var(--line); }
@@ -244,6 +254,22 @@
 }
 .ken-pin.is-active { background: var(--accent); color: var(--accent-ink); transform: translateY(-4px) scale(1.12); z-index: 10; }
 .ken-pin.is-closed { background: var(--ink-3); }
+
+/* Pastille de regroupement au dézoom (leaflet.markercluster) */
+.ken-cluster-wrap { background: none !important; border: 0 !important; }
+.ken-cluster {
+  display: grid; place-items: center; width: 42px; height: 42px; border-radius: 50%;
+  background: var(--primary); color: #fff; border: 3px solid var(--surface);
+  font: 700 14px/1 var(--font-ui); box-shadow: 0 2px 8px rgba(0, 0, 0, .32);
+}
+
+/* Point « vous êtes ici » */
+.ken-me-wrap { background: none !important; border: 0 !important; }
+.ken-me {
+  display: block; width: 16px; height: 16px; border-radius: 50%;
+  background: var(--info); border: 3px solid #fff;
+  box-shadow: 0 0 0 6px color-mix(in srgb, var(--info) 25%, transparent);
+}
 
 .leaflet-container { font: inherit; background: var(--surface-2); }
 .leaflet-control-attribution { font-size: 9px !important; background: rgba(255, 255, 255, .7) !important; }

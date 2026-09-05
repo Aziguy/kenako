@@ -27,6 +27,9 @@ export function view(ctx) {
           <p class="bo-sub">${number(orders.filter((o) => o.status === 'new').length)} nouvelle(s) · ${number(filtered.length)} affichée(s)</p>
         </div>
         <div class="row" style="gap:var(--sp-2)">
+          <button type="button" class="btn btn--outline btn--sm" data-act="simulate-order">
+            ${raw(icon('plus', { size: 16 }))} Simuler une commande
+          </button>
           <button type="button" class="btn btn--outline btn--sm" data-act="toggle-sound" aria-pressed="${state.sound}">
             ${raw(icon('bell', { size: 16 }))} Son ${state.sound ? 'activé' : 'coupé'}
           </button>
@@ -45,7 +48,7 @@ export function view(ctx) {
         ${ORDER_STATUSES.map((col) => {
           const items = filtered.filter((o) => o.status === col.id);
           return html`
-            <section class="kanban__col">
+            <section class="kanban__col" data-col="${col.id}">
               <header class="kanban__head">
                 <span class="badge badge--${col.tone}">${col.label}</span>
                 <span class="tiny dim">${items.length}</span>
@@ -53,7 +56,7 @@ export function view(ctx) {
               <div class="kanban__list">
                 ${items.length
                   ? items.map((o) => orderCard(o, { selected: state.selectedOrder === o.id }))
-                  : html`<p class="tiny dim" style="padding:var(--sp-4);text-align:center;border:1px dashed var(--line);border-radius:var(--r-md)">Rien ici</p>`}
+                  : html`<p class="tiny dim" style="padding:var(--sp-4);text-align:center;border:1px dashed var(--line);border-radius:var(--r-md)">Glissez une commande ici</p>`}
               </div>
             </section>`;
         })}
@@ -115,6 +118,16 @@ function drawer(ctx, order) {
           </section>
 
           ${order.lat ? html`<div class="map-canvas" id="order-map" style="height:170px" aria-label="Adresse de livraison"></div>` : ''}
+
+          <section class="stack-sm">
+            <h3 class="eyebrow">Temps de préparation annoncé</h3>
+            <div class="row-wrap">
+              ${[10, 20, 30, 45].map(
+                (m) => html`<button type="button" class="chip" data-act="set-prep" data-value="${m}"
+                  aria-pressed="${ctx.state.prepTime === m}">${m} min</button>`
+              )}
+            </div>
+          </section>
         </div>
 
         <footer class="sheet__foot">
@@ -152,7 +165,40 @@ export function refusalBody(orderId) {
   </div>`;
 }
 
+/**
+ * Glisser-déposer d'une commande d'une colonne à l'autre.
+ * Les écouteurs sont posés à chaque rendu : le DOM est reconstruit à neuf,
+ * il n'y a donc rien à détacher.
+ */
+function wireDragAndDrop(ctx) {
+  let dragged = null;
+
+  document.querySelectorAll('.kanban .order-card').forEach((card) => {
+    card.setAttribute('draggable', 'true');
+    card.addEventListener('dragstart', (e) => {
+      dragged = card.dataset.id;
+      card.classList.add('is-dragging');
+      e.dataTransfer.effectAllowed = 'move';
+      e.dataTransfer.setData('text/plain', dragged);
+    });
+    card.addEventListener('dragend', () => card.classList.remove('is-dragging'));
+  });
+
+  document.querySelectorAll('.kanban__col').forEach((col) => {
+    col.addEventListener('dragover', (e) => { e.preventDefault(); col.classList.add('is-over'); });
+    col.addEventListener('dragleave', () => col.classList.remove('is-over'));
+    col.addEventListener('drop', (e) => {
+      e.preventDefault();
+      col.classList.remove('is-over');
+      const id = dragged || e.dataTransfer.getData('text/plain');
+      if (id) ctx.onDrop?.(id, col.dataset.col);
+      dragged = null;
+    });
+  });
+}
+
 export function mount(ctx) {
+  wireDragAndDrop(ctx);
   const container = document.getElementById('order-map');
   miniMap?.destroy();
   miniMap = null;

@@ -65,7 +65,7 @@ export function view(ctx) {
                     </span>`
                   )}
                 </div>`,
-              { sub: 'Dessinez un polygone pour ajouter une zone', action: '<button type="button" class="btn btn--outline btn--sm" data-act="draw-zone">Dessiner</button>' }
+              { sub: 'Rayon maximal 4 km · 3 zones actives', action: '<button type="button" class="btn btn--outline btn--sm" data-act="draw-zone">Dessiner</button>' }
             )}
 
             <div class="stack">
@@ -142,6 +142,7 @@ export function mount() {
   handle = createMap(container, { center: [RESTO.lat, RESTO.lng], zoom: 13 });
   if (!handle) return;
   handle.setZones(ZONES);
+  handle.setRadius(RESTO.lat, RESTO.lng, 4000, 'var(--ink-3)');
   handle.setMarkers([{ id: 'resto', lat: RESTO.lat, lng: RESTO.lng, name: RESTO.name, label: '🍽️' }]);
   handle.invalidate();
 }

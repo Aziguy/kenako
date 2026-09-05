@@ -47,23 +47,27 @@ export function cmsView(ctx) {
               <div class="grid grid--2" style="gap:var(--sp-5);align-items:start">
                 <div class="stack">
                   <label class="field"><span class="field__label">Titre</span>
-                    <input class="input" value="${CMS.hero.title}"></label>
+                    <input class="input" value="${state.heroTitle ?? CMS.hero.title}" data-bind="heroTitle"></label>
                   <label class="field"><span class="field__label">Sous-titre</span>
-                    <textarea class="textarea" rows="3">${CMS.hero.subtitle}</textarea></label>
+                    <textarea class="textarea" rows="3" data-bind="heroSubtitle">${state.heroSubtitle ?? CMS.hero.subtitle}</textarea></label>
                   <label class="field"><span class="field__label">Bouton d’appel à l’action</span>
-                    <input class="input" value="${CMS.hero.cta}"></label>
+                    <input class="input" value="${state.heroCta ?? CMS.hero.cta}" data-bind="heroCta"></label>
                   <div class="field"><span class="field__label">Visuel</span>
                     <button type="button" class="btn btn--outline btn--sm" data-act="upload-hero">
                       ${raw(icon('edit', { size: 15 }))} ${CMS.hero.visual}</button></div>
                 </div>
 
-                <div class="card card--flat" style="overflow:hidden">
+                <div class="browser-frame">
+                  <div class="browser-frame__bar" aria-hidden="true">
+                    <span class="browser-frame__dot"></span><span class="browser-frame__dot"></span><span class="browser-frame__dot"></span>
+                    <span class="browser-frame__url">kenako.fr</span>
+                  </div>
                   <div class="thumb" style="--tint:var(--primary);aspect-ratio:16/9;border-radius:0"></div>
                   <div class="card__body stack-sm">
-                    <p class="eyebrow">Aperçu</p>
-                    <h3 style="font-size:22px">${CMS.hero.title}</h3>
-                    <p class="tiny muted">${CMS.hero.subtitle}</p>
-                    <span class="btn btn--accent btn--sm" style="justify-self:start">${CMS.hero.cta}</span>
+                    <p class="eyebrow">Aperçu en direct</p>
+                    <h3 style="font-size:22px;font-family:var(--font-display);font-weight:500">${state.heroTitle ?? CMS.hero.title}</h3>
+                    <p class="tiny muted">${state.heroSubtitle ?? CMS.hero.subtitle}</p>
+                    <span class="btn btn--accent btn--sm" style="justify-self:start">${state.heroCta ?? CMS.hero.cta}</span>
                   </div>
                 </div>
               </div>`

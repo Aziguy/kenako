@@ -12,6 +12,7 @@ import { initTheme, toggleTheme } from '../core/theme.js';
 import { toastOk, toastWarn, toastInfo } from '../core/toast.js';
 import { openModal, closeModal } from '../core/sheet.js';
 import { icon } from '../core/icons.js';
+import { clock } from '../core/format.js';
 import { sidebar, toolbar, bottomNav, themeButton, spaceSwitcher, spaceSwitcherSheet } from '../core/shell.js';
 
 import { RESTO, ORDERS, CATEGORIES, ONBOARDING, ORDER_STATUSES } from '../data/resto.js';
@@ -155,7 +156,15 @@ const router = createRouter({
   },
 });
 
-const ctx = { get state() { return store.state; }, store, router };
+const ctx = {
+  get state() { return store.state; },
+  store,
+  router,
+  /** Dépôt d'une carte de commande dans une colonne du Kanban. */
+  onDrop: (id, status) => ACTIONS['set-status']({ id, status }),
+  /** Dépôt d'un plat sur un autre, pour réordonner une catégorie. */
+  onReorderDish: (from, to) => ACTIONS['reorder-dish']({ from, to }),
+};
 
 /* --------------------------------------------------------------- Rendu */
 
@@ -190,7 +199,18 @@ function paint() {
           ${toolbar({
             title: TITLES[route.name] || RESTO.name,
             sub: RESTO.address,
-            actions: `${store.state.accepting ? '<span class="badge badge--success"><span class="badge__dot"></span>Commandes ouvertes</span>' : '<span class="badge badge--danger">✕ Commandes fermées</span>'}
+            // L'interrupteur et le mode rush vivent dans la barre d'outils :
+            // ce sont les deux gestes qu'on fait dix fois par service, depuis
+            // n'importe quel écran.
+            actions: `<button type="button" class="toolbar-switch${store.state.accepting ? ' is-on' : ''}"
+                data-act="toggle-accept" role="switch" aria-checked="${store.state.accepting}">
+                <span class="badge__dot" aria-hidden="true"></span>
+                <span class="desktop-only">${store.state.accepting ? 'Commandes ouvertes' : 'Commandes fermées'}</span>
+              </button>
+              <button type="button" class="btn btn--ghost btn--icon btn--sm hint${store.state.rush ? ' is-rush' : ''}"
+                data-hint="Mode rush" data-act="toggle-rush" aria-pressed="${store.state.rush}" aria-label="Mode rush">
+                ${icon('fire', { size: 18 })}
+              </button>
               ${themeButton().__html}
               ${spaceSwitcher('resto').__html}`,
           })}
@@ -274,6 +294,29 @@ const ACTIONS = {
     toastInfo(store.state.sound ? 'Son des nouvelles commandes activé' : 'Son coupé');
   },
   'open-order': ({ id }) => store.set({ selectedOrder: id }),
+  'set-status': ({ id, status }) => {
+    const order = store.state.orders.find((o) => o.id === id);
+    if (!order || order.status === status) return;
+    updateOrder(id, { status });
+    toastOk(`${id} · ${ORDER_STATUSES.find((s) => s.id === status)?.label ?? status}`);
+  },
+  /** Bouton de démonstration : fabrique une commande entrante. */
+  'simulate-order': () => {
+    const n = 48232 + store.state.orders.length;
+    const order = {
+      id: `K-${n}`, status: 'new', mode: 'livraison', time: clock(), client: 'Nouvelle cliente',
+      phone: '06 11 22 33 44', address: '9 rue Saint-Sabin, 75011 Paris', detail: '', 
+      payment: 'Carte · payé', total: 31, minutes: 0, lat: 48.8594, lng: 2.3712,
+      items: [{ q: 1, n: 'Risotto aux champignons', o: '', p: 17 }, { q: 1, n: 'Tarte tatin', o: '', p: 8 }],
+      note: '',
+    };
+    store.set((s) => ({ orders: [order, ...s.orders] }));
+    toastOk(`Nouvelle commande ${order.id}`, { action: 'Ouvrir', onAction: () => store.set({ selectedOrder: order.id }) });
+  },
+  'set-prep': ({ value }) => {
+    store.set({ prepTime: Number(value) });
+    toastOk(`Délai annoncé : ${value} minutes`);
+  },
   // Le voile porte l'action : un clic *dans* le panneau ne doit pas fermer.
   'close-drawer': (data, event, el) => {
     if (el.classList.contains('scrim') && event.target !== el) return;
@@ -336,11 +379,47 @@ const ACTIONS = {
     }));
     toastOk(`${source.name} dupliqué`);
   },
+  'delete-dish': ({ id }) => {
+    const item = store.state.categories.flatMap((c) => c.items).find((i) => i.id === id);
+    if (!item) return;
+    openModal({
+      title: `<h2 style="font-size:20px">Supprimer « ${esc(item.name)} » ?</h2>`,
+      body: '<p class="muted">Le plat disparaît de votre carte et des recherches. Les commandes passées le conservent.</p>',
+      foot: `<div class="row" style="gap:var(--sp-2)">
+        <button type="button" class="btn btn--ghost" style="flex:1" data-act="sheet-close">Annuler</button>
+        <button type="button" class="btn btn--danger" style="flex:1" data-act="confirm-delete-dish" data-id="${esc(id)}">Supprimer</button>
+      </div>`,
+      onAction: (data) => {
+        if (data.act !== 'confirm-delete-dish') return;
+        store.set((s) => ({
+          categories: s.categories.map((c) => ({ ...c, items: c.items.filter((i) => i.id !== data.id) })),
+        }));
+        closeModal();
+        toastWarn(`${item.name} supprimé de la carte`);
+      },
+    });
+  },
   'edit-dish': ({ id }) => {
     const item = store.state.categories.flatMap((c) => c.items).find((i) => i.id === id);
     openSheetForm(`Modifier « ${item?.name ?? ''} »`, Menu.dishForm(item), 'Enregistrer le plat');
   },
   'new-dish': () => openSheetForm('Nouveau plat', Menu.dishForm(null), 'Créer le plat'),
+  /** Réordonnancement d'un plat par glisser-déposer, à l'intérieur d'une catégorie. */
+  'reorder-dish': ({ from, to }) => {
+    if (!from || !to || from === to) return;
+    store.set((s) => ({
+      categories: s.categories.map((c) => {
+        const iFrom = c.items.findIndex((i) => i.id === from);
+        const iTo = c.items.findIndex((i) => i.id === to);
+        if (iFrom === -1 || iTo === -1) return c;   // pas la même catégorie
+        const items = [...c.items];
+        const [moved] = items.splice(iFrom, 1);
+        items.splice(iTo, 0, moved);
+        return { ...c, items };
+      }),
+    }));
+    toastOk('Ordre de la carte mis à jour');
+  },
   'move-cat': ({ id, dir }) => {
     const delta = Number(dir);
     store.set((s) => {
@@ -426,6 +505,7 @@ const ACTIONS = {
   'confirm-reservation': ({ name }) => toastOk(`Réservation de ${name} confirmée · SMS envoyé`),
   'edit-reservation': ({ name }) => openSheetForm(`Réservation · ${name}`, reservationForm(), 'Enregistrer'),
   'open-table': ({ no }) => toastInfo(`Table ${no} — QR code et commandes en cours.`),
+  'regen-qr': () => toastWarn('Nouveaux QR codes générés — les anciens ne fonctionnent plus. Pensez à réimprimer la planche.'),
   'print-qr': () => { toastInfo('Planche de QR codes envoyée à l’imprimante'); setTimeout(() => window.print(), 300); },
 
   /* --- clients & avis --- */

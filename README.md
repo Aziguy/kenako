@@ -100,11 +100,9 @@ npx serve .
 │   │
 │   └── img/favicon.svg
 │
-├── docs/
-│   ├── brief-original.md       Le cahier des charges de départ
-│   └── handoff-planches-dc.md  Documentation de la première version (planches de design)
-│
-└── archive/design-canvas/      Première version du prototype (planches `.dc.html`)
+└── docs/
+    ├── brief-original.md       Le cahier des charges de départ
+    └── handoff-planches-dc.md  Spécification de la première version
 ```
 
 ### Comment une vue est écrite

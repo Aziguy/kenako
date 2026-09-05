@@ -13,6 +13,20 @@
 .bo-title { font-family: var(--font-display); font-size: 26px; font-weight: 500; letter-spacing: -.015em; }
 .bo-sub { color: var(--ink-2); font-size: var(--fs-sm); }
 
+/* Interrupteur d'acceptation, posé dans la barre d'outils : accessible
+   depuis tous les écrans, comme dans un vrai service. */
+.toolbar-switch {
+  display: inline-flex; align-items: center; gap: var(--sp-2);
+  height: 34px; padding: 0 var(--sp-3); border-radius: var(--r-full);
+  border: 1px solid var(--line); background: var(--surface);
+  color: var(--danger); font-size: var(--fs-sm); font-weight: 700; white-space: nowrap;
+  transition: background var(--t-fast), color var(--t-fast), border-color var(--t-fast);
+}
+.toolbar-switch .badge__dot { background: currentColor; }
+.toolbar-switch.is-on { color: var(--success); border-color: color-mix(in srgb, var(--success) 40%, transparent); background: var(--success-soft); }
+.toolbar-switch:hover { border-color: currentColor; }
+.btn.is-rush { background: var(--warning-soft); color: var(--warning); }
+
 /* --------------------------------------------------- Interrupteur commandes */
 .accept-toggle {
   display: flex; align-items: center; gap: var(--sp-4); padding: var(--sp-4);
@@ -28,7 +42,12 @@
 .kanban::-webkit-scrollbar-thumb { background: var(--line-strong); border-radius: 4px; }
 @media (min-width: 700px) { .kanban { grid-auto-columns: 320px; } }
 @media (min-width: 1400px) { .kanban { grid-auto-flow: row; grid-template-columns: repeat(6, minmax(0, 1fr)); overflow: visible; } }
-.kanban__col { display: grid; grid-template-rows: auto 1fr; gap: var(--sp-2); scroll-snap-align: start; min-width: 0; }
+.kanban__col {
+  display: grid; grid-template-rows: auto 1fr; gap: var(--sp-2);
+  scroll-snap-align: start; min-width: 0; border-radius: var(--r-md);
+  transition: background var(--t-fast), box-shadow var(--t-fast);
+}
+.kanban__col.is-over { background: var(--primary-soft); box-shadow: inset 0 0 0 2px var(--primary); }
 .kanban__head { display: flex; align-items: center; gap: var(--sp-2); padding: var(--sp-2) var(--sp-1); position: sticky; top: 0; }
 .kanban__list { display: grid; gap: var(--sp-2); align-content: start; }
 
@@ -41,6 +60,9 @@
 .order-card:hover { box-shadow: var(--shadow-sm); transform: translateY(-1px); }
 .order-card.is-new { border-left-color: var(--primary); background: var(--primary-soft); }
 .order-card.is-late { border-left-color: var(--danger); }
+.order-card.is-dragging { opacity: .4; }
+.order-card[draggable="true"] { cursor: grab; }
+.order-card[draggable="true"]:active { cursor: grabbing; }
 .order-card__id { font-family: var(--font-mono); font-weight: 700; font-size: var(--fs-sm); }
 .order-card__items { font-size: var(--fs-sm); color: var(--ink-2); line-height: 1.4; }
 
@@ -109,6 +131,12 @@
   border: 1px dashed var(--line-strong); display: grid; place-items: center; gap: var(--sp-2);
   text-align: center; padding: var(--sp-4); color: var(--ink-3);
 }
+
+/* Fausse fenêtre de navigateur, pour l'aperçu du site public */
+.browser-frame { border: 1px solid var(--line); border-radius: var(--r-lg); overflow: hidden; background: var(--surface); }
+.browser-frame__bar { display: flex; align-items: center; gap: 6px; padding: var(--sp-2) var(--sp-3); background: var(--surface-2); border-bottom: 1px solid var(--line); }
+.browser-frame__dot { width: 9px; height: 9px; border-radius: 50%; background: var(--line-strong); }
+.browser-frame__url { margin-left: var(--sp-2); font-size: var(--fs-xs); color: var(--ink-3); font-family: var(--font-mono); }
 
 /* ------------------------------------------------------- Bandeau lecture seule */
 .readonly-banner {

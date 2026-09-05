@@ -133,6 +133,32 @@ function loyalty(state) {
             <input class="input num" value="${cfg.referralFriend}"><span class="field__hint">Appliqué sur sa 1re commande</span></label>
         </div>
         <p class="tiny dim" style="margin-top:var(--sp-3)">Coût estimé par filleul acquis : ${money(cfg.referralSponsor + cfg.referralFriend)}.</p>`
+    )}
+
+    ${sectionCard(
+      'Bannière promotionnelle',
+      html`
+        <div class="grid grid--2" style="gap:var(--sp-5);align-items:start">
+          <div class="stack">
+            <label class="field"><span class="field__label">Message</span>
+              <input class="input" value="Livraison offerte dès 25 € cette semaine"></label>
+            <label class="field"><span class="field__label">Période</span>
+              <div class="grid grid--2" style="gap:var(--sp-3)">
+                <input class="input" type="date"><input class="input" type="date">
+              </div></label>
+            <button type="button" class="switch" role="switch" aria-checked="true" data-act="toggle-banner">
+              <span class="switch__track"></span><span class="tiny">Afficher sur ma fiche</span>
+            </button>
+          </div>
+          <div class="stack-sm">
+            <span class="eyebrow">Aperçu côté client</span>
+            <div class="thumb" style="--tint:${RESTO.tint};aspect-ratio:21/9;border-radius:var(--r-md)">
+              <span class="thumb__slot" style="align-items:flex-start"><span class="badge badge--accent">Livraison offerte dès 25 €</span></span>
+              <span class="thumb__label">${RESTO.name}</span>
+            </div>
+            <p class="tiny dim">La bannière apparaît en tête de votre fiche, au-dessus de la carte.</p>
+          </div>
+        </div>`
     )}`;
 }
 

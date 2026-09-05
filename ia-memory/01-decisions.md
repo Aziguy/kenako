@@ -29,8 +29,10 @@ cérémonie pour un bénéfice nul à cette échelle).
 `package.json`. Cela casserait à la fois le déploiement Pages et la lisibilité
 du handoff.
 
-L'ancienne version est conservée dans `archive/design-canvas/` et sa
-documentation dans `docs/handoff-planches-dc.md`.
+L'ancienne version a d'abord été conservée dans `archive/design-canvas/`, puis
+supprimée le 5 sept. après audit de parité (voir D14). Elle reste récupérable
+au commit `16f3bbe`. Sa documentation, `docs/handoff-planches-dc.md`, est
+conservée.
 
 ---
 
@@ -166,7 +168,7 @@ avant la solution.
 
 ## D10 — Slogan sur la vitrine, label fonctionnel dans les applications
 
-**Date :** 4 sept. 2026 · **Statut :** appliqué, **question ouverte**
+**Date :** 4 sept. 2026 · **Statut :** appliqué et **confirmé** le 5 sept.
 
 Sous le monogramme, la vitrine affiche le slogan **« Qu'est-ce qu'on
 mange… »** en serif italique semi-gras avec un dégradé paprika → safran
@@ -176,8 +178,8 @@ l'espace (« Espace client », « Livreur · Karim T. », « Formule Signature �
 **Pourquoi :** dans un prototype à cinq espaces, cette ligne sert à se
 repérer. Le slogan y perdrait cette fonction.
 
-**Question posée au propriétaire, sans réponse à ce jour :** faut-il le
-slogan partout ? Voir `06-ouvert.md`.
+**Tranché le 5 sept. 2026** par le propriétaire du dépôt : « pas de slogan sur
+toutes les pages ». Le comportement décrit ci-dessus est définitif.
 
 ---
 
@@ -229,3 +231,25 @@ ont des interlignes fixes.
 **Pourquoi cette approche plutôt qu'une taille figée :** le lockup reste
 aligné quelle que soit la longueur de la ligne secondaire — slogan de 16 px
 sur la vitrine, étiquette de 10 px dans les applications.
+
+---
+
+## D14 — Suppression de l'archive après audit de parité
+
+**Date :** 5 sept. 2026 · **Statut :** appliqué
+
+Le propriétaire a autorisé la suppression de `archive/design-canvas/` **à
+condition** que le nouveau prototype couvre tout ce que contenait l'archive.
+
+**Décidé :** vérifier la condition plutôt que la supposer. Audit section par
+section des 28 blocs de `docs/handoff-planches-dc.md`. Dix-neuf écarts réels
+trouvés et comblés, puis suppression.
+
+**Pourquoi cette rigueur :** une condition posée par le propriétaire n'est pas
+une formalité. Supprimer sans vérifier aurait fait perdre des fonctionnalités
+sans que personne ne s'en aperçoive avant longtemps.
+
+**Récupération :** `git checkout 16f3bbe -- archive/design-canvas/`.
+
+**Conservé :** `docs/handoff-planches-dc.md`, seul relevé détaillé de la
+spécification d'origine et grille de l'audit.

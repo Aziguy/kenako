@@ -36,7 +36,8 @@ export function view(ctx) {
       <div class="banner banner--success">
         <span class="banner__icon" aria-hidden="true">✓</span>
         <span><strong class="banner__title">Zéro commission sur vos commandes</strong>
-        Kenako ne facture qu’un abonnement mensuel. Chaque paiement client est encaissé sur vos comptes.</span>
+        Kenako ne touche jamais l’argent de vos commandes : chaque paiement client arrive directement
+        sur votre compte. Nous ne facturons que votre abonnement mensuel.</span>
       </div>
 
       <div class="tabs" role="tablist">

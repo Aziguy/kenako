@@ -255,6 +255,7 @@ const ACTIONS = {
   'cms-tab': ({ tab }) => store.set({ cmsTab: tab }),
   'publish-cms': () => toastOk('Page d’accueil publiée'),
   'upload-hero': () => toastInfo('Image 2400 × 1200 px recommandée.'),
+  'view-doc': ({ name }) => toastInfo(name + ' ouvert en visionneuse plein écran.'),
   'toggle-block': () => toastOk('Bloc mis à jour'),
   unfeature: ({ name }) => toastInfo(`${name} retiré de la mise en avant`),
   'feature-resto': () => toastInfo('Sélectionnez un restaurant à mettre en avant.'),

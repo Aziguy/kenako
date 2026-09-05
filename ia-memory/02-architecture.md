@@ -53,11 +53,9 @@ Environ 10 400 lignes de JavaScript et de CSS, réparties en 55 modules JS et
 ├── assets/js/landing.js
 ├── assets/js/design-system.js
 │
-├── docs/
-│   ├── brief-original.md       Cahier des charges de départ
-│   └── handoff-planches-dc.md  Documentation de la première version
-│
-└── archive/design-canvas/      Première version du prototype (planches .dc.html)
+└── docs/
+    ├── brief-original.md       Cahier des charges de départ
+    └── handoff-planches-dc.md  Spécification de la première version (grille d'audit)
 ```
 
 ## Le socle en détail

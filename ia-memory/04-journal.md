@@ -5,6 +5,70 @@ livré, et ce qui a été vérifié.
 
 ---
 
+## 5 sept. 2026 — Parité avec l'archive, puis suppression de l'archive
+
+**Demandé :** deux réponses aux questions ouvertes — pas de slogan sur toutes
+les pages (Q1), et suppression de `archive/design-canvas/` **à condition** que
+le nouveau prototype couvre tout ce que contenait l'archive, et davantage (Q2).
+
+**Audit mené** sur la base de `docs/handoff-planches-dc.md`, section par
+section (A1–A10, B1–B11, C1–C7). Conclusion : la condition n'était **pas**
+remplie. Dix-neuf écarts réels, tous comblés avant suppression.
+
+**Écarts comblés — espace client :**
+
+- A1 : titre éditorial « Qu'est-ce qui vous ferait plaisir ? » sur l'accueil.
+- A2 : regroupement des marqueurs au dézoom (`leaflet.markercluster`).
+- A2 : point bleu « vous êtes ici » sur la carte.
+- A4 : le bouton d'ajout reste désactivé et affiche « Choisissez : cuisson »
+  tant que le choix obligatoire manque, au lieu d'accepter le clic puis
+  d'afficher une erreur.
+- A5 : tunnel en deux colonnes avec récapitulatif collant sur desktop.
+
+**Écarts comblés — espace restaurateur :**
+
+- B2 : interrupteur d'acceptation et mode rush déplacés dans la barre
+  d'outils, donc accessibles depuis tous les écrans.
+- B3 : glisser-déposer d'une commande d'une colonne du Kanban à l'autre.
+- B3 : réglage du temps de préparation dans le panneau de détail.
+- B3 : bouton « Simuler une commande ».
+- B4 : réordonnancement des plats par glisser-déposer.
+- B4 : bouton de suppression d'un plat, avec confirmation.
+- B5 : cercle de rayon maximal de 4 km en pointillés sur la carte des zones.
+- B6 : encart « Kenako ne touche jamais l'argent de vos commandes… » rétabli
+  mot pour mot — le handoff le demandait explicitement.
+- B7 : bloc « Bannière promotionnelle » avec aperçu côté client.
+- B9 : bouton « Régénérer » les QR codes, avec avertissement.
+
+**Écarts comblés — superadmin :**
+
+- C1 : KPI « En attente » et « Suspendus » rétablis (7 tuiles).
+- C1 : bloc « À traiter maintenant » — trois raccourcis vers les comptes à
+  valider, les impayés et les avis signalés.
+- C1 : rappel légal rétabli mot pour mot.
+- C2 : bouton « Visionner en plein écran » par document, et mention
+  « Aucune action sur les commandes n'est possible » en pied de fiche.
+- C4 : aperçu du site public en fausse fenêtre de navigateur, mis à jour à la
+  frappe.
+
+**Différences conservées, assumées comme des améliorations :** compte client
+en 5 onglets au lieu de 7 (parrainage dans Fidélité, notifications dans
+Réglages), surbrillance croisée de la carte au clic plutôt qu'au survol,
+progression du suivi toutes les 9 s au lieu de 3,5 s, marqueurs de villes en
+pastilles chiffrées plutôt qu'en cercles proportionnels.
+
+**Vérifié fonctionnellement, pas seulement à l'œil :** regroupement effectif au
+dézoom (2 grappes), dépôt d'une commande qui change bien de colonne,
+réordonnancement d'un plat qui modifie l'ordre du magasin, suppression
+confirmée qui retire la ligne, cercle en pointillés présent sur la carte,
+aperçu CMS qui suit la saisie. Puis balayage 6 pages × 2 largeurs.
+
+**Suppression :** `archive/design-canvas/` retiré du répertoire de travail,
+récupérable au commit `16f3bbe`. `docs/handoff-planches-dc.md` conservé — c'est
+le relevé de la spécification d'origine et la grille de cet audit.
+
+---
+
 ## 5 sept. 2026 — Documentation et mémoire du projet
 
 **Demandé :** créer `CLAUDE.md`, `AGENTS.md`, et un dossier `ia-memory/`

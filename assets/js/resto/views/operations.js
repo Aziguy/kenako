@@ -161,7 +161,11 @@ export function reservationsView(ctx) {
                   </div>`
                 )}
               </div>`,
-            { action: '<button type="button" class="btn btn--primary btn--sm no-print" data-act="print-qr">' + icon('print', { size: 15 }) + ' Imprimer la planche</button>' }
+            {
+              action:
+                '<button type="button" class="btn btn--outline btn--sm no-print" data-act="regen-qr">' + icon('copy', { size: 15 }) + ' Régénérer</button>' +
+                '<button type="button" class="btn btn--primary btn--sm no-print" style="margin-left:var(--sp-2)" data-act="print-qr">' + icon('print', { size: 15 }) + ' Imprimer la planche</button>',
+            }
           )
         : ''}
     </div>`;

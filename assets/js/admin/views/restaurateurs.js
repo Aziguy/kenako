@@ -147,6 +147,9 @@ function detail(r) {
                   ${raw(icon('eye', { size: 26 }))}
                   <span class="tiny">Aperçu du document · déposé le ${d.date}</span>
                 </div>
+                <button type="button" class="btn btn--outline btn--sm btn--block" data-act="view-doc" data-name="${d.name}">
+                  ${raw(icon('eye', { size: 15 }))} Visionner en plein écran
+                </button>
                 ${d.state !== 'validé'
                   ? html`<div class="row" style="gap:var(--sp-2)">
                       <button type="button" class="btn btn--success btn--sm" style="flex:1" data-act="validate-doc" data-name="${d.name}">
@@ -172,6 +175,8 @@ function detail(r) {
         </div>
 
         <footer class="sheet__foot">
+          <p class="tiny dim">${raw(icon('shield', { size: 13 }))} Toute action est inscrite au journal d’audit.
+          <strong>Aucune action sur les commandes n’est possible.</strong></p>
           ${r.status === 'en attente'
             ? html`<div class="row" style="gap:var(--sp-2)">
                 <button type="button" class="btn btn--danger" style="flex:1" data-act="reject-resto" data-id="${r.id}">Refuser le dossier</button>
