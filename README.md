@@ -7,6 +7,10 @@ chaque paiement va directement à l'établissement.
 
 > 🔗 **Démo en ligne** — https://aziguy.github.io/kenako/
 
+> 🛠️ **Vous reprenez le projet ?** Lisez [`AGENTS.md`](AGENTS.md) pour les règles
+> de travail, puis [`ia-memory/`](ia-memory/README.md) pour le contexte, les
+> décisions et les pièges déjà rencontrés.
+
 ---
 
 ## Les cinq espaces
